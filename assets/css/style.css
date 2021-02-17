@@ -715,6 +715,15 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+
+/* Features Table */
+@media (max-width: px) {
+  .table {
+    width: 50%;
+  }
+}
+
+
 /*--------------------------------------------------------------
 # Hero6 Section
 --------------------------------------------------------------*/
@@ -1302,7 +1311,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Akills
+# Skills
 --------------------------------------------------------------*/
 .skills .progress {
   height: 50px;
@@ -1687,6 +1696,46 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Attach
+--------------------------------------------------------------*/
+
+/* .row .attach {
+  padding: 12px;
+    width: 42px;
+    height: 42px;
+    margin-right: 15px;
+  background: #78bd48;
+  color: #fff;
+  border-radius: 100%;
+}
+
+.row .attach:hover {
+  color: #fff;
+  opacity: .8;
+}
+
+.row .attach {
+  padding: 16px;
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  margin-left: 20px;
+  box-shadow: 0 5px 10px 4px rgba(0, 0, 0, .04);
+} */
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+/*--------------------------------------------------------------
 # Testimonials
 --------------------------------------------------------------*/
 .testimonials .section-header {
@@ -1867,6 +1916,10 @@ section {
   border-top-color: #eee;
   -webkit-animation: animate-loading 1s linear infinite;
   animation: animate-loading 1s linear infinite;
+}
+
+.php-email-form input {
+  align-items: center;
 }
 
 .contact .php-email-form input, .contact .php-email-form textarea {
