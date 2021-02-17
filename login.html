@@ -68,14 +68,14 @@
           
           <div class="col-lg-12 mt-4 mt-lg-0">
 
-            <form method="post" role="form" class="php-email-form">
+            <form role="form" class="php-email-form" onsubmit="return false">
               <div class="form-row">
                 <div class="col-md-12 form-group">
-                  <input type="email" name="email" class="form-control" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" style="max-width: 30em;"/>
+                  <input type="email" class="form-control" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" style="max-width: 30em;"/>
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-12 form-group">
-                  <input type="password" class="form-control" name="email" id="email" placeholder="Your Password" data-rule="email" data-msg="Please enter a valid password" style="max-width: 30em;"/>
+                  <input type="password" class="form-control" id="password" placeholder="Your Password" data-rule="" data-msg="Please enter a valid password" style="max-width: 30em;"/>
                   <div class="validate"></div>
                 </div>
               </div>
@@ -92,7 +92,7 @@
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div> -->
-              <div class="text-center"><button type="submit">Login</button></div>
+              <div class="text-center"><button type="submit" onclick="login()">Login</button></div>
             </form>
 
           </div>
@@ -145,8 +145,17 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  
-
+  <script>
+    //get field values here
+    var email = document.getElementById("email");
+    var password = document.getElementById("password");
+    function login(){
+      console.log(email.value);
+    if(email.value==="dot@dot.com" && password.value==="password"){
+      return window.location.href = "index.html";
+    }
+  }
+  </script>
 </body>
 
 </html>
