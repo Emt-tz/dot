@@ -1,4 +1,4 @@
-module Dotcms
+module dotcms/main
 
 go 1.16
 
