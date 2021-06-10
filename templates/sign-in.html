@@ -35,16 +35,22 @@
 										</button>
 									</div>
 									<p>or use your email account:</p> -->
-									<form>
+									 <!--If there's an error, display the error-->
+    {{ if .ErrorTitle}}
+    <p class="bg-danger">
+      {{.ErrorTitle}}: {{.ErrorMessage}}
+    </p>
+    {{end}}
+									<form class="form" action="/u/login" method="POST">
 										<div class="form-group">
-											<input type="email" id="inputEmail" class="form-control" placeholder="Email Address" required>
+											<input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email Address" required>
 											<button class="btn icon"><i class="material-icons">mail_outline</i></button>
 										</div>
 										<div class="form-group">
-											<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+											<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
 											<button class="btn icon"><i class="material-icons">lock_outline</i></button>
 										</div>
-										<button type="submit" class="btn button" formaction="index.html">Sign In</button>
+										<button type="submit" class="btn button">Sign In</button>
 										
 									</form>
 								</div>
@@ -60,7 +66,7 @@
 							<div class="preference">
 								<h2>Hello, Friend!</h2>
 								<p>Enter your personal details to Sign Up.</p>
-								<a href="sign-up.html" class="btn button">Sign Up</a>
+								<a href="/register" class="btn button">Sign Up</a>
 							</div>
 						</div>
 					</div>

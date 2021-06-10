@@ -141,7 +141,9 @@
                         <li class="nav-link"><a href="#" class="nav-item dropdown-item">Profile</a></li>
                         <li class="nav-link"><a href="#" class="nav-item dropdown-item">Settings</a></li>
                         <li class="dropdown-divider"></li>
-                        <li class="nav-link"><a href="#" class="nav-item dropdown-item">Log out</a></li>
+                        {{ if .is_logged_in }}
+                        <li class="nav-link"><a href="/u/logout" class="nav-item dropdown-item">Log out</a></li>
+                        {{end}}
                       </ul>
                     </li>
                     <li class="separator d-lg-none"></li>
