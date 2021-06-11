@@ -13,12 +13,11 @@ type users struct {
 	Password string `json:"-"`
 }
 
-// For this demo, we're storing the user list in memory
-// We also have some users predefined.
-// In a real application, this list will most likely be fetched
-// from a database. Moreover, in production settings, you should
-// store passwords securely by salting and hashing them instead
-// of using them as we're doing in this demo
+// opt := option.WithCredentialsFile(os.Getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+// 	app, err := firebase.NewApp(context.Background(), nil, opt)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("error initializing app: %v", err)
+// 	}
 var userList = []users{
 	{Username: "admin", Email: "admin@dot.com", Password: "admin"},
 }

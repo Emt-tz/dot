@@ -40,7 +40,7 @@ func initializeRoutes() {
 	router.Use(setUserStatus())
 
 	//afrecast.html
-	router.GET(routes[0], func(c *gin.Context) {
+	router.GET("/u/"+routes[0], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 			"afrecast.html",
@@ -50,7 +50,7 @@ func initializeRoutes() {
 		)
 	})
 	//beneficiariesSE.html
-	router.GET(routes[1], func(c *gin.Context) {
+	router.GET("/u/"+routes[1], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -61,7 +61,7 @@ func initializeRoutes() {
 		)
 	})
 	//cim.html
-	router.GET(routes[2], func(c *gin.Context) {
+	router.GET("/u/"+routes[2], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -72,7 +72,7 @@ func initializeRoutes() {
 		)
 	})
 	//circle.html
-	router.GET(routes[3], func(c *gin.Context) {
+	router.GET("/u/"+routes[3], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -83,7 +83,7 @@ func initializeRoutes() {
 		)
 	})
 	//dashboard.html
-	router.GET(routes[4], func(c *gin.Context) {
+	router.GET("/u/"+routes[4], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -94,7 +94,7 @@ func initializeRoutes() {
 		)
 	})
 	//digitalbus.html
-	router.GET(routes[5], func(c *gin.Context) {
+	router.GET("/u/"+routes[5], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -105,7 +105,7 @@ func initializeRoutes() {
 		)
 	})
 	//dn.html
-	router.GET(routes[6], func(c *gin.Context) {
+	router.GET("/u/"+routes[6], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -116,7 +116,7 @@ func initializeRoutes() {
 		)
 	})
 	//ewong.html
-	router.GET(routes[7], func(c *gin.Context) {
+	router.GET("/u/"+routes[7], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -127,7 +127,7 @@ func initializeRoutes() {
 		)
 	})
 	//index.html
-	router.GET(routes[8], func(c *gin.Context) {
+	router.GET("/u/"+routes[8], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -138,7 +138,7 @@ func initializeRoutes() {
 		)
 	})
 	//jembe.html
-	router.GET(routes[9], func(c *gin.Context) {
+	router.GET("/u/"+routes[9], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -149,7 +149,7 @@ func initializeRoutes() {
 		)
 	})
 	//moow.html
-	router.GET(routes[10], func(c *gin.Context) {
+	router.GET("/u/"+routes[10], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -160,18 +160,18 @@ func initializeRoutes() {
 		)
 	})
 	//notifications.html
-	router.GET(routes[11], func(c *gin.Context) {
+	router.GET("/u/"+routes[11], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
-			"nofitications.html",
+			"notifications.html",
 			gin.H{
 				"title": "Dot",
 			},
 		)
 	})
 	//programs.html
-	router.GET(routes[12], func(c *gin.Context) {
+	router.GET("/u/"+routes[12], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -182,7 +182,7 @@ func initializeRoutes() {
 		)
 	})
 	//socialent.html
-	router.GET(routes[13], func(c *gin.Context) {
+	router.GET("/u/"+routes[13], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -193,7 +193,7 @@ func initializeRoutes() {
 		)
 	})
 	//survey.html
-	router.GET(routes[14], func(c *gin.Context) {
+	router.GET("/u/"+routes[14], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -204,7 +204,7 @@ func initializeRoutes() {
 		)
 	})
 	//tables.html
-	router.GET(routes[15], func(c *gin.Context) {
+	router.GET("/u/"+routes[15], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -215,7 +215,7 @@ func initializeRoutes() {
 		)
 	})
 	//tyds.html
-	router.GET(routes[16], func(c *gin.Context) {
+	router.GET("/u/"+routes[16], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
@@ -225,27 +225,27 @@ func initializeRoutes() {
 			},
 		)
 	})
+	//user.html
+	router.GET("/u/"+routes[17], func(c *gin.Context) {
+		c.HTML(
+			http.StatusOK,
+
+			"user.html",
+
+			gin.H{
+				"title": "Dot",
+				"user":  usermodel,
+			},
+		)
+	})
 	//explore.html
-	router.GET(routes[17], func(c *gin.Context) {
+	router.GET("/u/"+routes[18], func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,
 
 			"explore.html",
 			gin.H{
 				"title": "Dot",
-			},
-		)
-	})
-	//user.html
-	router.GET(routes[18], func(c *gin.Context) {
-		c.HTML(
-			http.StatusOK,
-
-			routes[17],
-
-			gin.H{
-				"title": "Dot",
-				"user":  usermodel,
 			},
 		)
 	})
