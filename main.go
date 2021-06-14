@@ -1,12 +1,27 @@
 package main
 
 import (
+	"context"
 	"net/http"
 
+	"cloud.google.com/go/firestore"
+	firebase "firebase.google.com/go"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/api/option"
 )
 
 var router *gin.Engine
+
+// var app *firebase.App
+// var ctx context.Context
+var client *firestore.Client
+
+var c user
+var ctx = context.Background()
+
+//init firebase
+var opt = option.WithCredentialsFile("firebase.json")
+var app, err = firebase.NewApp(ctx, nil, opt)
 
 func main() {
 

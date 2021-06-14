@@ -11,10 +11,10 @@ func initializeRoutes() {
 	userRoutes := router.Group("")
 	{
 		userRoutes.GET("/login", ensureNotLoggedIn(), showLoginPage)
-		userRoutes.POST("/login", ensureNotLoggedIn(), performLogin)
+		userRoutes.POST("/p/login", ensureNotLoggedIn(), performLogin)
 		userRoutes.GET("/logout", ensureLoggedIn(), logout)
 		userRoutes.GET("/register", ensureNotLoggedIn(), showRegistrationPage)
-		userRoutes.POST("/register", ensureNotLoggedIn(), register)
+		userRoutes.POST("/p/register", ensureNotLoggedIn(), register)
 
 		userRoutes.GET("/dashboard", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{

@@ -3,6 +3,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,10 +18,8 @@ func ensureLoggedIn() gin.HandlerFunc {
 		loggedIn := loggedInInterface.(bool)
 		if !loggedIn {
 			//if token, err := c.Cookie("token"); err != nil || token == "" {
-			//c.AbortWithStatus(http.StatusUnauthorized)
-			render(c, gin.H{
-				"ErrorTitle":   "unauthorized",
-				"ErrorMessage": "Login to continue"}, "sign-in.html")
+
+			c.AbortWithStatus(http.StatusUnauthorized)
 
 		}
 	}
@@ -34,9 +34,8 @@ func ensureNotLoggedIn() gin.HandlerFunc {
 		loggedInInterface, _ := c.Get("is_logged_in")
 		loggedIn := loggedInInterface.(bool)
 		if loggedIn {
-			c.SetCookie("token", "", -1, "", "", true, false)
-
 			// Redirect to the home page
+			c.AbortWithStatus(http.StatusUnauthorized)
 
 		}
 	}

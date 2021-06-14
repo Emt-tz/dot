@@ -11,6 +11,7 @@ import (
 )
 
 func showLoginPage(c *gin.Context) {
+
 	// Call the render function with the name of the template to render
 	render(c, gin.H{
 		"title": "Login",
@@ -47,13 +48,11 @@ func generateSessionToken() string {
 
 func logout(c *gin.Context) {
 
-	//var sameSiteCookie http.SameSite
+	c.SetCookie("token", "", -1, "", "", false, true)
 
-	// Clear the cookie
-	c.SetCookie("token", "", -1, "", "", true, false)
+	render(c, gin.H{
+		"title": "Login"}, "sign-in.html")
 
-	// Redirect to the home page
-	c.Redirect(http.StatusMovedPermanently, "/")
 }
 
 func showRegistrationPage(c *gin.Context) {
@@ -63,21 +62,19 @@ func showRegistrationPage(c *gin.Context) {
 }
 
 func register(c *gin.Context) {
-
 	// Obtain the POSTed username and password values
-	// username := c.PostForm("inputName")
+	username := c.PostForm("inputName")
 	email := c.PostForm("inputEmail")
-	// password := c.PostForm("inputPassword")
-	// Category := c.PostForm("Category")
+	password := c.PostForm("inputPassword")
+	Category := c.PostForm("Category")
+
 	em := loaduser_by_email(email)
+	register_user := registerNewUser(email, username, email, password, Category)
 
 	if em != email {
-		register_user := registerNewUser(email, username, email, password, Category)
-
 		if register_user == nil {
-			token := generateSessionToken()
-			c.SetCookie("token", token, 3600, "", "", true, false)
-			c.Set("is_logged_in", true)
+			// token := generateSessionToken()
+			// c.SetCookie("token", token, 3600, "", "", true, false)
 
 			render(c, gin.H{
 				"ErrorTitle":   "Registration Successfully",
