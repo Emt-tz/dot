@@ -36,12 +36,8 @@
 									</div>
 									<p>or use your email for registration:</p> -->
 									<!--If there's an error, display the error-->
-    {{ if .ErrorTitle}}
-    <p class="bg-danger">
-      {{.ErrorTitle}}: {{.ErrorMessage}}
-    </p>
-    {{end}} 
-									<form class="signup" action="/u/register" method="POST">
+  
+									<form class="signup" action="/register" method="POST">
 										<div class="form-parent">
 											<div class="form-group">
 												<input type="text" id="inputName" name="inputName" class="form-control" placeholder="Username" required>
@@ -56,9 +52,27 @@
 											<input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
 											<button class="btn icon"><i class="material-icons">lock_outline</i></button>
 										</div>
+										<select id="Category" name="Category" style="width: 100%; padding: 18px; border-radius: 0.4em;">
+											
+											<option value="Staff">Staff</option>
+											<option value="Community Leader">Community Leader</option>
+											<option value="Social Innovator">Social Innovator</option>
+											<option value="Digital Ambasador">Digital Ambasador</option>
+											<option value="Partner">Partner</option>
+										</select><br><br>
 										<button type="submit" class="btn button">Sign Up</button>
 										<div class="callout">
 											<span>Already a member? <a href="/login">Sign In</a></span>
+										</div>
+										<div>
+											<br>
+										</div>
+										<div class="col-sm">
+											{{ if .ErrorTitle}}
+											<p class="alert alert-danger">
+											  {{.ErrorTitle}}: {{.ErrorMessage}}
+											</p>
+											{{end}}
 										</div>
 									</form>
 								</div>

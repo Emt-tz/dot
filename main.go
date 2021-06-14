@@ -9,14 +9,19 @@ import (
 var router *gin.Engine
 
 func main() {
+
+	// em := loaduser_by_pass("peterkelvin16@gmail.com")
+	// log.Fatal(em)
+	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/assets", "./assets")
 	initializeRoutes()
+
 	// Start serving the application
 	router.Run()
 }
- 
+
 func render(c *gin.Context, data gin.H, templateName string) {
 	loggedInInterface, _ := c.Get("is_logged_in")
 	data["is_logged_in"] = loggedInInterface.(bool)

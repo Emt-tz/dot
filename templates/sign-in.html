@@ -36,12 +36,7 @@
 									</div>
 									<p>or use your email account:</p> -->
 									 <!--If there's an error, display the error-->
-    {{ if .ErrorTitle}}
-    <p class="bg-danger">
-      {{.ErrorTitle}}: {{.ErrorMessage}}
-    </p>
-    {{end}}
-									<form class="form" action="/u/login" method="POST">
+									<form class="form" action="/login" method="POST">
 										<div class="form-group">
 											<input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email Address" required>
 											<button class="btn icon"><i class="material-icons">mail_outline</i></button>
@@ -51,7 +46,16 @@
 											<button class="btn icon"><i class="material-icons">lock_outline</i></button>
 										</div>
 										<button type="submit" class="btn button">Sign In</button>
-										
+										<div>
+											<br>
+										</div>
+										<div class="col-sm">
+											{{ if .ErrorTitle}}
+											<p class="alert alert-danger">
+											  {{.ErrorTitle}}: {{.ErrorMessage}}
+											</p>
+											{{end}}
+										</div>
 									</form>
 								</div>
 							</div>
