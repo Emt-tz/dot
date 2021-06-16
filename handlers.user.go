@@ -49,7 +49,7 @@ func generateSessionToken() string {
 
 func logout(c *gin.Context) {
 
-	c.SetCookie("token", "", -1, "", "dottanzania.herokuapp.com", false, true)
+	c.SetCookie("token", "", -1, "/", "dottanzania.herokuapp.com", false, true)
 
 	render(c, gin.H{
 		"title": "Login"}, "sign-in.html")
