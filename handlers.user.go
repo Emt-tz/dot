@@ -3,6 +3,7 @@
 package main
 
 import (
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -91,4 +92,39 @@ func register(c *gin.Context) {
 			"ErrorMessage": "Email Exists"})
 	}
 
+}
+
+func UserEdit(c *gin.Context) {
+	// //get edited query parameters here
+	// queryparams := c.Request.URL.Query()
+
+	// if (queryparams["Fname"] || queryparams["Address"] || queryparams["City"] || queryparams["Country"] || queryparams["Code"] || queryparams["Contact"] != nil){
+
+	// }
+
+	// data := map[string]interface{}{
+	// 	"FirstName": queryparams["Fname"],
+	// 	"Address":   queryparams["Address"],
+	// 	"City":      queryparams["City"],
+	// 	"Country":   queryparams["Country"],
+	// 	"Code":      queryparams["Code"],
+	// 	"Contact":   queryparams["Contact"],
+	// 	"Image":     queryparams["Image"],
+	// }
+
+	// fmt.Println(v)
+	//create a json response to return
+	response := make(map[string]string)
+
+	response["uploaded"] = "Successfully"
+	//result, err := json.Marshal(response)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": response["uploaded"], // cast it to string before showing
+	})
 }

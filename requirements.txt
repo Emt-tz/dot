@@ -1,0 +1,28 @@
+not done yet 
+
+required to finish right now this night 
+
+1. page to manage users
+	just like wp-admin
+with the functions
+
+3. admin functions
+
+	generate forms
+	generate survey
+	send notifications
+	add a new program
+	remove a program
+	see statistics
+	add new images
+	
+	
+
+2. user functions
+	send progress (all see)
+	upload survey (admin sees)
+	edit details
+	
+	
+
+	

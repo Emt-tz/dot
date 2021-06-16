@@ -75,4 +75,6 @@ func initializeRoutes() {
 		}, "sign-in.html")
 	})
 
+	router.GET("/userdata", UserEdit)
+
 }

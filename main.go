@@ -20,8 +20,11 @@ var c user
 var ctx = context.Background()
 
 //init firebase
+var config = &firebase.Config{
+	StorageBucket: "dot-cms-f3582.appspot.com",
+}
 var opt = option.WithCredentialsFile("firebase.json")
-var app, err = firebase.NewApp(ctx, nil, opt)
+var app, err = firebase.NewApp(ctx, config, opt)
 
 func main() {
 

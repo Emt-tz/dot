@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"io"
 	"log"
 
+	"cloud.google.com/go/storage"
 	firebase "firebase.google.com/go"
 	"github.com/mitchellh/mapstructure"
 	"google.golang.org/api/option"
@@ -63,4 +66,35 @@ func adduser(id string, data map[string]interface{}) error {
 	}
 
 	return nil
+}
+
+func Upload(id string, fileInput []byte, fileName string) error {
+
+	client, err := app.Storage(context.Background())
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	bucket, err := client.DefaultBucket()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	object := bucket.Object(fileName)
+	writer := object.NewWriter(ctx)
+
+	//Set the attribute
+	writer.ObjectAttrs.Metadata = map[string]string{"firebaseStorageDownloadTokens": id}
+	defer writer.Close()
+
+	if _, err := io.Copy(writer, bytes.NewReader(fileInput)); err != nil {
+		return err
+	}
+
+	if err := object.ACL().Set(context.Background(), storage.AllUsers, storage.RoleReader); err != nil {
+		return err
+	}
+
+	return nil
+
 }
