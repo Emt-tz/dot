@@ -30,7 +30,7 @@ func performLogin(c *gin.Context) {
 	if err == nil {
 		// If the username/password is valid set the token in a cookie
 		token := generateSessionToken()
-		c.SetCookie("token", token, 3600, "", "", true, false)
+		c.SetCookie("token", token, 3600, "", "dottanzania.herokuapp.com", true, false)
 		c.Set("is_logged_in", true)
 		c.Redirect(http.StatusMovedPermanently, "/dashboard")
 
@@ -49,7 +49,7 @@ func generateSessionToken() string {
 
 func logout(c *gin.Context) {
 
-	c.SetCookie("token", "", -1, "", "", false, true)
+	c.SetCookie("token", "", -1, "", "dottanzania.herokuapp.com", false, true)
 
 	render(c, gin.H{
 		"title": "Login"}, "sign-in.html")
