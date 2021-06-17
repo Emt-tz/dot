@@ -34,7 +34,7 @@ var data = map[string]interface{}{
 	"City":      usermodel.City,
 	"Country":   usermodel.Country,
 	"Code":      usermodel.Code,
-	"Image":     "/assets/anime3.png",
+	"Image":     "../assets/anime3.png",
 	"Category":  usermodel.Category,
 }
 
@@ -53,7 +53,6 @@ var config = &firebase.Config{
 }
 var opt = option.WithCredentialsFile("firebase.json")
 var app, err = firebase.NewApp(ctx, config, opt)
-
 
 func main() {
 

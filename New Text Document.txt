@@ -1,6 +1,6 @@
 to accomplish
 
-user should edit page status
+
 user should submit forms or surveys done
 user should get notification of new survey and ability to download form and submit
 user should get any new notifications received concerning any news

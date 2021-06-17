@@ -19,27 +19,43 @@ func initializeRoutes() {
 		userRoutes.GET("/dashboard", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title":    "Dashboard",
-				"user_img": usermodel.Image,
+				"Image": "../assets/img/anime3.png",
 			}, "index.html")
 		})
 		userRoutes.GET("/statistics", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title":    "Statistics",
-				"user_img": usermodel.Image,
+				"Image": "../assets/img/anime3.png",
 			}, "dashboard.html")
 		})
 		userRoutes.GET("/survey", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title":    "Survey",
-				"user_img": usermodel.Image,
+				"Image": "../assets/img/anime3.png",
 			}, "survey.html")
 		})
 		userRoutes.GET("/user", ensureLoggedIn(), func(c *gin.Context) {
 			FirstName := usermodel.FirstName[0]
-			if FirstName == "" {
+			LastName := usermodel.LastName[0]
+			Address := usermodel.Address[0]
+			City := usermodel.City[0]
+			Country := usermodel.Country[0]
+			Code := usermodel.Code[0]
+
+			if FirstName == "" || LastName == "" || Address == "" || City == "" || Country == "" || Code == "" {
 				FirstName = ""
+				LastName = ""
+				Address = ""
+				City = ""
+				Country = ""
+				Code = ""
 			} else {
 				FirstName = usermodel.FirstName[0]
+				LastName = usermodel.LastName[0]
+				Address = usermodel.Address[0]
+				City = usermodel.City[0]
+				Country = usermodel.Country[0]
+				Code = usermodel.Code[0]
 			}
 
 			render(c, gin.H{
@@ -48,37 +64,37 @@ func initializeRoutes() {
 				"Title":     usermodel.Title,
 				"Email":     usermodel.Email,
 				"FirstName": FirstName,
-				"LastName":  usermodel.LastName,
-				"Address":   usermodel.Address,
-				"City":      usermodel.City,
-				"Country":   usermodel.Country,
-				"Code":      usermodel.Code,
-				"Image":     "../assets/anime3.png",
+				"LastName":  LastName,
+				"Address":   Address,
+				"City":      City,
+				"Country":   Country,
+				"Code":      Code,
+				"Image":     "../assets/img/anime3.png",
 				"Category":  usermodel.Category,
 			}, "user.html")
 		})
 		userRoutes.GET("/programs", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title":    "Programs",
-				"user_img": usermodel.Image,
+				"Image": "../assets/img/anime3.png",
 			}, "programs.html")
 		})
 		userRoutes.GET("/table", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title":    "Tables",
-				"user_img": usermodel.Image,
+				"Image": "../assets/img/anime3.png",
 			}, "tables.html")
 		})
 		userRoutes.GET("/gallery", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title":    "Gallery",
-				"user_img": usermodel.Image,
+				"Image": "../assets/img/anime3.png",
 			}, "gallery.html")
 		})
 		userRoutes.GET("/explore", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title":    "Explore",
-				"user_img": usermodel.Image,
+				"Image": "../assets/img/anime3.png",
 			}, "explore.html")
 		})
 
@@ -102,7 +118,7 @@ func initializeRoutes() {
 			"City":      usermodel.City,
 			"Country":   usermodel.Country,
 			"Code":      usermodel.Code,
-			"Image":     "./assets/anime3.png",
+			"Image":     "../assets/img/anime3.png",
 			"Category":  usermodel.Category,
 		})
 	})
