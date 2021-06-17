@@ -29,19 +29,19 @@
                                 <div class="col-md-5 pr-md-1">
                                     <div class="form-group">
                                         <label>Title</label>
-                                        <input type="text" class="form-control" disabled="" placeholder="Company" value="Coordinator">
+                                        <input type="text" class="form-control" disabled="" placeholder="Company" value="{{ .Category }}">
                                     </div>
                                 </div>
                                 <div class="col-md-3 px-md-1">
                                     <div class="form-group">
                                         <label>Username</label>
-                                        <input type="text" class="form-control" disabled="" placeholder="Username" value="{{ .user.LastName }}">
+                                        <input type="text" class="form-control" disabled="" placeholder="Username" value="{{ .Title }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4 pl-md-1">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" disabled="" placeholder="" value="{{ .user.Email }}">
+                                        <input type="email" class="form-control" disabled="" placeholder="" value="{{ .Email }}">
                                     </div>
                                 </div>
                             </div>
@@ -49,13 +49,13 @@
                                 <div class="col-md-6 pr-md-1">
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control" id="FirstName" placeholder=" Company " value="{{ .user.FirstName }} ">
+                                        <input type="text" class="form-control" id="FirstName" placeholder=" Company " value="{{ .FirstName }} ">
                                     </div>
                                 </div>
                                 <div class="col-md-6 pl-md-1 ">
                                     <div class="form-group ">
                                         <label>Last Name</label>
-                                        <input type="text " class="form-control " id="LastName" placeholder="Last Name " value="{{ .user.LastName }} ">
+                                        <input type="text " class="form-control " id="LastName" placeholder="Last Name " value="{{ .LastName }} ">
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 <div class="col-md-12 ">
                                     <div class="form-group ">
                                         <label>Address</label>
-                                        <input type="text " class="form-control " id="Address" placeholder="Home Address " value="{{ .user.Address }} ">
+                                        <input type="text " class="form-control " id="Address" placeholder="Home Address " value="{{ .Address }} ">
                                     </div>
                                 </div>
                             </div>
@@ -71,19 +71,19 @@
                                 <div class="col-md-4 pr-md-1 ">
                                     <div class="form-group ">
                                         <label>City</label>
-                                        <input type="text " class="form-control " id="City" placeholder="City " value="{{ .user.City }} ">
+                                        <input type="text " class="form-control " id="City" placeholder="City " value="{{ .City }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4 px-md-1 ">
                                     <div class="form-group ">
                                         <label>Country</label>
-                                        <input type="text " class="form-control " id="Country" placeholder=" Country " value="{{ .user.Country }} ">
+                                        <input type="text " class="form-control " id="Country" placeholder=" Country " value="{{ .Country }} ">
                                     </div>
                                 </div>
                                 <div class="col-md-4 pl-md-1 ">
                                     <div class="form-group ">
                                         <label>Postal Code</label>
-                                        <input type="number " class="form-control " id="PostalCode" placeholder=" Postal Code " value="{{ .user.Code }} ">
+                                        <input type="number " class="form-control " id="PostalCode" placeholder=" Postal Code " value="{{ .Code }} ">
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-fill btn-primary">Save</button>
+                        <button class="btn btn-fill btn-primary" onclick="edit()">Save</button>
                     </div>
                 </div>
             </div>
@@ -117,11 +117,11 @@
                             <div class="block block-three "></div>
                             <div class="block block-four "></div>
                             <a href="javascript:void(0) ">
-                                <img class="avatar " src="{{ .user_img }} " alt="... ">
-                                <h5 class="title ">{{ .user_first }}&nbsp;{{ .user_last }}</h5>
+                                <img class="avatar " src="{{ .Image }} " alt="... ">
+                                <h5 class="title ">{{ .FirstName }}&nbsp;{{ .LastName }}</h5>
                             </a>
                             <p class="description ">
-                                {{ .user_title }}
+                                {{ .Title }}
                             </p>
                         </div>
                     </p>

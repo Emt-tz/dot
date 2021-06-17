@@ -7,35 +7,6 @@ import (
 	"log"
 )
 
-//user logged in model
-type user struct {
-	Title     string
-	Email     string
-	Password  string
-	FirstName string
-	LastName  string
-	Address   string
-	City      string
-	Country   string
-	Code      string
-	Contact   string
-	Image     string
-	Category  string
-}
-
-var Title = "Manager"
-var Email = "peterkelvin16@gmail.com"
-var FirstName = "Emmanuel"
-var LastName = "Mtera"
-var Address = "Mbezi Jogoo"
-var City = "Dar es salaam"
-var Country = "Tanzania"
-var Code = "14128"
-var Contact = "0744568803"
-var Image = "../assets/img/profile-img01.jpg"
-
-var usermodel = user{Title, Email, FirstName, "", LastName, Address, City, Country, Code, Contact, Image, "nil"}
-
 var email string
 var username string
 var Category string

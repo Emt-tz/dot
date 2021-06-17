@@ -17,9 +17,28 @@ func ensureLoggedIn() gin.HandlerFunc {
 		loggedInInterface, _ := c.Get("is_logged_in")
 		loggedIn := loggedInInterface.(bool)
 		if !loggedIn {
-			//if token, err := c.Cookie("token"); err != nil || token == "" {
 
-			c.AbortWithStatus(http.StatusUnauthorized)
+			//if token expired just redirect to login instead of 401
+			if token, err := c.Cookie("token"); err != nil || token == "" {
+				c.Redirect(http.StatusMovedPermanently, "/login")
+			} else {
+				c.Redirect(http.StatusMovedPermanently, "/Dashboard")
+			}
+
+		}
+	}
+}
+
+func ensureToregister() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		loggedInInterface, _ := c.Get("is_logged_in")
+		loggedIn := loggedInInterface.(bool)
+		if loggedIn {
+			if token, err := c.Cookie("token"); err != nil || token != "" {
+				c.Redirect(http.StatusMovedPermanently, "/register")
+			} else {
+				c.Redirect(http.StatusMovedPermanently, "/Dashboard")
+			}
 
 		}
 	}
@@ -34,8 +53,11 @@ func ensureNotLoggedIn() gin.HandlerFunc {
 		loggedInInterface, _ := c.Get("is_logged_in")
 		loggedIn := loggedInInterface.(bool)
 		if loggedIn {
-			// Redirect to the home page
-			c.AbortWithStatus(http.StatusUnauthorized)
+			if token, err := c.Cookie("token"); err != nil || token != "" {
+				c.Redirect(http.StatusMovedPermanently, "/logout")
+			} else {
+				c.Redirect(http.StatusMovedPermanently, "/Dashboard")
+			}
 
 		}
 	}

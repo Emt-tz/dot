@@ -13,7 +13,7 @@ func initializeRoutes() {
 		userRoutes.GET("/login", ensureNotLoggedIn(), showLoginPage)
 		userRoutes.POST("/p/login", ensureNotLoggedIn(), performLogin)
 		userRoutes.GET("/logout", ensureLoggedIn(), logout)
-		userRoutes.GET("/register", ensureNotLoggedIn(), showRegistrationPage)
+		userRoutes.GET("/register", showRegistrationPage)
 		userRoutes.POST("/p/register", ensureNotLoggedIn(), register)
 
 		userRoutes.GET("/dashboard", ensureLoggedIn(), func(c *gin.Context) {
@@ -35,17 +35,31 @@ func initializeRoutes() {
 			}, "survey.html")
 		})
 		userRoutes.GET("/user", ensureLoggedIn(), func(c *gin.Context) {
+			FirstName := usermodel.FirstName[0]
+			if FirstName == "" {
+				FirstName = ""
+			} else {
+				FirstName = usermodel.FirstName[0]
+			}
+
 			render(c, gin.H{
-				"title":      "Welcome " + FirstName + " " + LastName,
-				"user_img":   usermodel.Image,
-				"user_first": usermodel.FirstName,
-				"user_last":  usermodel.LastName,
-				"user_title": usermodel.Title,
+				"title":     usermodel.LastName,
+				"id":        usermodel.Email,
+				"Title":     usermodel.Title,
+				"Email":     usermodel.Email,
+				"FirstName": FirstName,
+				"LastName":  usermodel.LastName,
+				"Address":   usermodel.Address,
+				"City":      usermodel.City,
+				"Country":   usermodel.Country,
+				"Code":      usermodel.Code,
+				"Image":     "../assets/anime3.png",
+				"Category":  usermodel.Category,
 			}, "user.html")
 		})
 		userRoutes.GET("/programs", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title":    "Login",
+				"title":    "Programs",
 				"user_img": usermodel.Image,
 			}, "programs.html")
 		})
@@ -76,5 +90,21 @@ func initializeRoutes() {
 	})
 
 	router.GET("/userdata", UserEdit)
+	router.GET("/session", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"title":     usermodel.LastName,
+			"id":        usermodel.Email,
+			"Title":     usermodel.Title,
+			"Email":     usermodel.Email,
+			"FirstName": usermodel.FirstName,
+			"LastName":  usermodel.LastName,
+			"Address":   usermodel.Address,
+			"City":      usermodel.City,
+			"Country":   usermodel.Country,
+			"Code":      usermodel.Code,
+			"Image":     "./assets/anime3.png",
+			"Category":  usermodel.Category,
+		})
+	})
 
 }

@@ -10,13 +10,41 @@ import (
 	"google.golang.org/api/option"
 )
 
+type user struct {
+	Title     string
+	Email     string
+	Password  string
+	FirstName []string
+	LastName  []string
+	Address   []string
+	City      []string
+	Country   []string
+	Code      []string
+	Image     string
+	Category  string
+}
+
+var data = map[string]interface{}{
+	"id":        usermodel.Email,
+	"Title":     usermodel.Title,
+	"Email":     usermodel.Email,
+	"FirstName": usermodel.FirstName,
+	"LastName":  usermodel.LastName,
+	"Address":   usermodel.Address,
+	"City":      usermodel.City,
+	"Country":   usermodel.Country,
+	"Code":      usermodel.Code,
+	"Image":     "/assets/anime3.png",
+	"Category":  usermodel.Category,
+}
+
 var router *gin.Engine
 
 // var app *firebase.App
 // var ctx context.Context
 var client *firestore.Client
 
-var c user
+var usermodel user
 var ctx = context.Background()
 
 //init firebase
@@ -26,18 +54,23 @@ var config = &firebase.Config{
 var opt = option.WithCredentialsFile("firebase.json")
 var app, err = firebase.NewApp(ctx, config, opt)
 
+
 func main() {
 
-	// em := loaduser_by_pass("peterkelvin16@gmail.com")
-	// log.Fatal(em)
 	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
+
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/assets", "./assets")
+
 	initializeRoutes()
 
 	// Start serving the application
 	router.Run()
+}
+
+func session() {
+
 }
 
 func render(c *gin.Context, data gin.H, templateName string) {

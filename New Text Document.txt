@@ -1,28 +1,20 @@
-not done yet 
+to accomplish
 
-required to finish right now this night 
+user should edit page status
+user should submit forms or surveys done
+user should get notification of new survey and ability to download form and submit
+user should get any new notifications received concerning any news
 
-1. page to manage users
-	just like wp-admin
-with the functions
+admin 
 
-3. admin functions
-
-	generate forms
-	generate survey
-	send notifications
-	add a new program
-	remove a program
-	see statistics
-	add new images
-	
-	
-
-2. user functions
-	send progress (all see)
-	upload survey (admin sees)
-	edit details
-	
-	
-
-	
+ability to generate forms and submit to users 
+ability to add and delete programs 
+ability to manipulate statistics graph with 
+	beneficiaries reached 
+	Regions
+	Sessions 
+	done via excel upload file 
+	load the data based on year 
+	admin can choose to display data of specific year
+ability to manage users i.e change user level e.t.c 
+ability to add

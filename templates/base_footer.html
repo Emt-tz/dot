@@ -73,6 +73,32 @@
 <!-- Black Dashboard DEMO methods, don't include it in your project! -->
 <script src="../assets/demo/demo.js"></script>
 <script>
+    //this script will edit the user page only
+    function edit() {
+        var Fname = document.getElementById("FirstName").value;
+        var Lname = document.getElementById("LastName").value;
+        var Address = document.getElementById("Address").value;
+        var City = document.getElementById("City").value;
+        var Country = document.getElementById("Country").value;
+        var Code = document.getElementById("PostalCode").value;
+        console.log(Fname, Lname, Address, City, Country, Code);
+        fetch("/userdata?Fname=" + Fname + "&Lname=" + Lname + "&Address=" + Address + "&City=" + City + "&Country=" + Country + "&Code=" + Code)
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 0) {
+                    alert("your inputs are empty");
+                }
+                if (data.message === 1) {
+                    alert("data is submitted");
+                }
+                if (data.message === 2) {
+                    alert("data submit failed try again or contact admin");
+                }
+
+            })
+    }
+</script>
+<script>
     $('input[type="file"]').change(function(e) {
         var fileName = e.target.files[0].name;
         //change picture

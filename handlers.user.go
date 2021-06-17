@@ -3,10 +3,11 @@
 package main
 
 import (
-	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
+
+	// "github.com/gin-contrib/sessions"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,10 +29,12 @@ func performLogin(c *gin.Context) {
 	err := isUserValid(email, password)
 	// Check if the email/password combination is valid
 	if err == nil {
+
 		// If the username/password is valid set the token in a cookie
 		token := generateSessionToken()
 		c.SetCookie("token", token, 3600, "", "", false, true)
 		c.Set("is_logged_in", true)
+		// session.Save()
 		c.Redirect(http.StatusMovedPermanently, "/dashboard")
 
 	} else {
@@ -95,36 +98,38 @@ func register(c *gin.Context) {
 }
 
 func UserEdit(c *gin.Context) {
+	response := make(map[string]int)
 	// //get edited query parameters here
-	// queryparams := c.Request.URL.Query()
+	queryparams := c.Request.URL.Query()
 
-	// if (queryparams["Fname"] || queryparams["Address"] || queryparams["City"] || queryparams["Country"] || queryparams["Code"] || queryparams["Contact"] != nil){
+	Fname := queryparams["Fname"]
+	Lname := queryparams["Lname"]
+	Address := queryparams["Address"]
+	City := queryparams["City"]
+	Country := queryparams["Country"]
+	Code := queryparams["Code"]
 
-	// }
-
-	// data := map[string]interface{}{
-	// 	"FirstName": queryparams["Fname"],
-	// 	"Address":   queryparams["Address"],
-	// 	"City":      queryparams["City"],
-	// 	"Country":   queryparams["Country"],
-	// 	"Code":      queryparams["Code"],
-	// 	"Contact":   queryparams["Contact"],
-	// 	"Image":     queryparams["Image"],
-	// }
-
-	// fmt.Println(v)
-	//create a json response to return
-	response := make(map[string]string)
-
-	response["uploaded"] = "Successfully"
-	//result, err := json.Marshal(response)
-
-	if err != nil {
-		log.Fatalln(err)
+	if len(Fname) == 0 || len(Lname) == 0 || len(Address) == 0 || len(City) == 0 || len(Country) == 0 || len(Code) == 0 {
+		response["uploaded"] = 0
+		c.JSON(http.StatusOK, gin.H{
+			"code":    http.StatusOK,
+			"message": response["uploaded"], // cast it to string before showing
+		})
+	} else {
+		v := edituser(usermodel.Email, Fname, Lname, Address, City, Country, Code)
+		if v == nil {
+			response["uploaded"] = 1
+			c.JSON(http.StatusOK, gin.H{
+				"code":    http.StatusOK,
+				"message": response["uploaded"], // cast it to string before showing
+			})
+		} else {
+			response["uploaded"] = 2
+			c.JSON(http.StatusOK, gin.H{
+				"code":    http.StatusOK,
+				"message": response["uploaded"], // cast it to string before showing
+			})
+		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"message": response["uploaded"], // cast it to string before showing
-	})
 }
