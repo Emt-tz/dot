@@ -8,7 +8,10 @@ require (
 	firebase.google.com/go v3.13.0+incompatible // indirect
 	github.com/gin-contrib/sessions v0.0.3 // indirect
 	github.com/gin-gonic/gin v1.7.2
+	github.com/go-passwd/validator v0.0.0-20180902184246-0b4c967e436b
 	github.com/google/uuid v1.2.0
+	github.com/joncalhoun/form v1.0.0
 	github.com/mitchellh/mapstructure v1.4.1
+	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e // indirect
 	google.golang.org/api v0.48.0 // indirect
 )

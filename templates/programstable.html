@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>Table Data Addition</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <table id="table" class="table" data-height="460">
+            <thead>
+                <tr>
+                    <th data-field="Unique ID for Youth Leader"></th>
+                    <th data-field="Project"></th>
+                    <th data-field="YL name"></th>
+                    <th data-field="Region"></th>
+                    <th data-field="Moodle username"></th>
+                    <th data-field="Moodle email id"></th>
+                    <th data-field="Gender"></th>
+                    <th data-field="Personal email"></th>
+                    <th data-field="Primary Phone number"></th>
+                    <th data-field="YL Contract start date"></th>
+                    <th data-field="YL Contract end date"></th>
+                    <th data-field="Role in programming"></th>
+                    <th data-field="Participated in Launchlab"></th>
+                    <th data-field="Participated in Peer Mentorship Program"></th>
+                    <th data-field="Deployed in Community?"></th>
+                    <th data-field="YLP Course Completion"></th>
+                    <th data-field="YLP Course Completion - This was done as online course and hence no F2F update needed "></th>
+                    <th data-field=""></th>
+                    <th data-field="Note: For Tanzania, contract start date is same as date of deployment. Contract end date is same as end of deployment date. And this means these youth are to be categorized as Community Leader. They may have done some Social Innovator work as well."></th>
+                    <th data-field="# of community beneficiaries who participate in DOT social innovation impactathons"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <script>
+        var $table = $('#table');
+
+        $(function() {
+
+            fetch("/jsonres")
+                .then(response => response.json())
+                .then(jsondata => {
+                    $('#table').bootstrapTable({
+                        data: jsondata.message
+                    });
+
+                });
+
+        });
+    </script>
+</body>
+
+</html>

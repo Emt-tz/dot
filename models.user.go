@@ -5,28 +5,32 @@ package main
 import (
 	"fmt"
 	"log"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
-var email string
 var username string
 var Category string
-var password string
 
 // Check if the username and password combination is valid
-func isUserValid(email, password string) error {
+func isUserValid(email string, password string) error {
+	//compare hash of passwords then proceed
+
 	user_login := loaduser_by_email(email)
 	pass_word := loaduser_by_pass(email)
-	if user_login == email && pass_word == password {
+	userpass := bcrypt.CompareHashAndPassword(pass_word, []byte(password))
+	if user_login == email && userpass == nil {
 		fmt.Printf("Document data: %#v\n", user_login)
 		return nil
 	} else {
-		return fmt.Errorf("something is not right")
+		return fmt.Errorf(userpass.Error())
 	}
 
 }
 
 // Register a new user with the given username, email and password
-func registerNewUser(id, username, email, password, Category string) error {
+func registerNewUser(id string, username string, email string, password []byte, Category string) error {
+
 	data := map[string]interface{}{
 		"id":        id,
 		"Title":     username,
@@ -38,7 +42,7 @@ func registerNewUser(id, username, email, password, Category string) error {
 		"Code":      "",
 		"Contact":   "",
 		"Image":     "",
-		"Password":  password,
+		"Password":  string(password),
 		"Category":  Category,
 	}
 

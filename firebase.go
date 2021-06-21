@@ -32,7 +32,7 @@ func loaduser_by_email(id string) string {
 
 }
 
-func loaduser_by_pass(id string) interface{} {
+func loaduser_by_pass(id string) []byte {
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
 	}
@@ -45,7 +45,7 @@ func loaduser_by_pass(id string) interface{} {
 	load_user, _ := client.Collection("users").Doc(id).Get(ctx)
 	mapstructure.Decode(load_user.Data(), &usermodel)
 
-	return usermodel.Password
+	return []byte(usermodel.Password)
 }
 
 func adduser(id string, data map[string]interface{}) error {
@@ -126,6 +126,68 @@ func Upload(id string, fileInput []byte, fileName string) error {
 
 	if err := object.ACL().Set(context.Background(), storage.AllUsers, storage.RoleReader); err != nil {
 		return err
+	}
+
+	return nil
+
+}
+
+func jsonupload(id string, data map[string]interface{}) error {
+	ctx = context.Background()
+	//init firebase
+	opt := option.WithCredentialsFile("firebase.json")
+	app, err := firebase.NewApp(ctx, nil, opt)
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		return err
+	}
+	defer client.Close()
+
+	_, err = client.Collection("programs").Doc(id).Set(ctx, data)
+
+	if err != nil {
+		return err
+	}
+	return err
+}
+
+func loadprograms(programname string) map[string]interface{} {
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+
+	load_user, _ := client.Collection("programs").Doc(programname).Get(ctx)
+
+	//mapstructure.Decode(load_user.Data(), &usermodel)
+	return load_user.Data()
+}
+
+func addbeneficiaries(id string, data map[string]interface{}) error{
+	ctx = context.Background()
+	//init firebase
+	opt := option.WithCredentialsFile("firebase.json")
+	app, err := firebase.NewApp(ctx, nil, opt)
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+
+	_, err = client.Collection("social_beneficiaries").Doc(id).Set(ctx, data)
+
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	return nil

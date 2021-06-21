@@ -1,32 +1,89 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"html/template"
+	"net/http"
+
+	"github.com/joncalhoun/form"
 )
 
-type MyStruct struct {
-	Id        string   `json:"id"`
-	Name      []string `json:"name"`
-	UserId    string   `json:"user_id"`
-	CreatedAt int64    `json:"created_at"`
-}
+var inputTpl = `
+<div class="form-group">
+	<label {{with .ID}}for="{{.}}"{{end}}>
+		{{.Label}}
+	</label>
+	{{if eq .Type "textarea"}}
+		<textarea class="form-control" {{with .ID}}id="{{.}}"{{end}} name="{{.Name}}" rows="3" placeholder="{{.Placeholder}}">{{with .Value}}{{.}}{{end}}</textarea>
+	{{else}}
+		<input type="{{.Type}}" class="form-control" {{with .ID}}id="{{.}}"{{end}} name="{{.Name}}" placeholder="{{.Placeholder}}" {{with .Value}}value="{{.}}"{{end}}>
+	{{end}}
+	{{with .Footer}}
+		<small class="form-text text-muted">
+			{{.}}
+		</small>
+	{{end}}
+</div>`
 
 func main() {
-	name := []string{"you"}
-	m := make(map[string]interface{})
-	m["id"] = "2"
-	m["name"] = name
-	m["user_id"] = "123"
-	m["created_at"] = 5
-	// v := make(map[string]string)
-	// v = map[Address:[Mbezi juu,jogoo] Category:Staff City:[Dar es salaak] Code:[14128] Contact: Country:[Tanzania] Email:peterkelvin16@gmail.com FirstName:[] Image: LastName:[Mtera] Password:admin Title:admin@dot.com id:peterkelvin16@gmail.com]
+	tpl := template.Must(template.New("").Parse(inputTpl))
+	fb := form.Builder{
+		InputTemplate: tpl,
+	}
 
-	jsonString, _ := json.Marshal(m)
-	fmt.Println(string(jsonString))
-
-	// convert json to struct
-	s := MyStruct{}
-	json.Unmarshal(jsonString, &s)
-	fmt.Println(s)
+	pageTpl := template.Must(template.New("").Funcs(fb.FuncMap()).Parse(`
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+			Sign up
+		</button>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="/do-stuff" method="post">
+							{{inputs_for .}}
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Sign Up</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+	`))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		pageTpl.Execute(w, userForm{
+			Name:      "",
+			Heading:   "",
+			ShortText: "",
+		})
+	})
+	http.ListenAndServe(":3000", nil)
 }
+
+type userForm struct {
+	Name      string
+	Heading   string `form:"type=email"`
+	ShortText string `form:"type=textarea;placeholder=input short description"`
+}
+

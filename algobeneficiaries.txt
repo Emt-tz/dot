@@ -1,0 +1,18 @@
+id:
+program name
+cols:
+heading
+short text
+url
+
+beneficiaries:
+cols:
+name
+founder
+link to preview:
+info
+about:
+contact info and social media e.t.c
+vision 
+mission
+text
