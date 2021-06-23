@@ -177,8 +177,7 @@ func initializeRoutes() {
 			"Category":  usermodel.Category,
 		})
 	})
-	router.GET("/json", JsonUpload)
-	router.GET("/jsonres", JsonRead)
+
 	router.GET("/tre", func(c *gin.Context) {
 		render(c, gin.H{
 			"title": "Administrator",
@@ -186,6 +185,10 @@ func initializeRoutes() {
 		}, "programstable.html")
 	})
 
-	router.GET("/addbene", AddBeneficiaries)
+	router.GET("/test", SocialInnovators_progress_handler)
+	router.GET("/test2", SocialInnovators_profile_handler)
+	router.GET("/test3", func(c *gin.Context) {
+		render(c, gin.H{"title": "none"}, "table.html")
+	})
 
 }

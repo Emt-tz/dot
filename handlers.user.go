@@ -3,7 +3,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
@@ -31,6 +30,18 @@ type address struct {
 	Zip     string `form:"label=Postal Code"`
 }
 
+//social innovators table struct is placed here
+type table struct {
+	Date          string
+	Impact        string
+	Intervention  string
+	Lead          string
+	Outcome       string
+	Participation string
+	Scoring       string
+}
+
+//==============================================================user login and sign up handlers =========================
 func showLoginPage(c *gin.Context) {
 
 	// Call the render function with the name of the template to render
@@ -188,70 +199,34 @@ func UserEdit(c *gin.Context) {
 
 }
 
-func JsonUpload(c *gin.Context) {
-	var data map[string]interface{}
+//=======================================================end user login and sign up handlers ==========================
 
-	jsonfile :=
-		`{
-			"Unique ID for Youth Leader": "TZDLYL000003",
-			"Project": "DL",
-			"YL name": "violeth lupenza",
-			"Region": "Dar Es Salaam",
-			"Moodle username": "lupenzavioleth",
-			"Moodle email id": "lupenzavioleth94@gmail.com",
-			"Gender": "Female",
-			"Personal email": "lupenzavioleth94@gmail.com",
-			"Primary Phone number": "756915619",
-			"YL Contract start date": "01/09/2017",
-			"YL Contract end date ": "30/06/2018",
-			"Role in programming": "Only CL",
-			"Participated in Launchlab": "No",
-			"Participated in Peer Mentorship Program": "No",
-			"Deployed in Community?": "Yes",
-			"YLP Course Completion": "Yes",
-			"YLP Course Completion - This was done as online course and hence no F2F update needed": "",
-			"Year": "2017",
-			"Note: For Tanzania, contract start date is same as date of deployment. Contract end date is same as end of deployment date. And this means these youth are to be categorized as Community Leader. They may have done some Social Innovator work as well.": "",
-			"# of community beneficiaries who participate in DOT social innovation impactathons": ""
-		}`
+//==============================================social innovation handlers =====================================================
+//social innovators section handler
+//route is test
+func SocialInnovators_progress_handler(c *gin.Context) {
+	//get the query parameters values
 
-	json.Unmarshal([]byte(jsonfile), &data)
+	tableid := c.Query("id")
 
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"code":    http.StatusOK,
-	// 	"message": data, // cast it to string before showing
-	// })
-	//completed here
-	id := "Tanzania Youth Leader"
-
-	result := jsonupload(id, data)
-
-	if result != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    http.StatusOK,
-			"message": result.Error(), // cast it to string before showing
-		})
-
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    http.StatusOK,
-			"message": "uploaded", // cast it to string before showing
-		})
+	data := table{
+		Date:          c.Query("Date"),
+		Impact:        c.Query("Impact"),
+		Intervention:  c.Query("Intervention"),
+		Lead:          c.Query("Lead"),
+		Outcome:       c.Query("Outcome"),
+		Participation: c.Query("Participation"),
+		Scoring:       c.Query("Scoring"),
 	}
+	response := update_social_beneficiaries_progress("Beneficiary", tableid, data)
+
+	c.JSON(http.StatusOK, gin.H{"response": response})
+
 }
 
-func JsonRead(c *gin.Context) {
-	programname := "Tanzania Youth Leader"
-	file := loadprograms(programname)
-	c.JSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"message": file, // cast it to string before showing
-	})
+func SocialInnovators_profile_handler(c *gin.Context) {
+	response := social_beneficiaries_profile()
+	c.JSON(http.StatusOK, gin.H{"response": response})
 }
 
-//handler to handle to beneficiaries upload
-func AddBeneficiaries(c *gin.Context) {
-
-	render(c, gin.H{"title": "beneficiaries",
-		"Image": "../assets/img/anime3.png"}, "addbene.html")
-}
+//============================================== end social innovation handlers =====================================================

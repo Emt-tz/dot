@@ -1,0 +1,6 @@
+Algorithm
+
+Social Innovator 
+forms(register beneficiary) store to beneficiary field
+
+progress tracking field

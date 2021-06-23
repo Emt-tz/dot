@@ -11,6 +11,7 @@ import (
 	"cloud.google.com/go/storage"
 	firebase "firebase.google.com/go"
 	"github.com/mitchellh/mapstructure"
+
 	"google.golang.org/api/option"
 )
 
@@ -170,7 +171,7 @@ func loadprograms(programname string) map[string]interface{} {
 	return load_user.Data()
 }
 
-func addbeneficiaries(id string, data map[string]interface{}) error{
+func addbeneficiaries(id string, data map[string]interface{}) error {
 	ctx = context.Background()
 	//init firebase
 	opt := option.WithCredentialsFile("firebase.json")
@@ -191,5 +192,83 @@ func addbeneficiaries(id string, data map[string]interface{}) error{
 	}
 
 	return nil
+
+}
+
+//social innovation function is placed here
+func update_social_beneficiaries_progress(Beneficiary string, Table string, data interface{}) error {
+	ctx = context.Background()
+	//init firebase
+	opt := option.WithCredentialsFile("firebase.json")
+	app, err := firebase.NewApp(ctx, nil, opt)
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+
+	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection(Beneficiary)
+
+	_, err = iter.Doc("Progress").Update(ctx, []firestore.Update{
+		{Path: Table, Value: data},
+	})
+
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
+
+}
+func social_beneficiaries_progress() map[string]interface{} {
+	ctx = context.Background()
+	//init firebase
+	opt := option.WithCredentialsFile("firebase.json")
+	app, err := firebase.NewApp(ctx, nil, opt)
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+
+	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection("Beneficiary")
+
+	res, err := iter.Doc("Progress").Get(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	return res.Data()
+
+}
+
+func social_beneficiaries_profile() map[string]interface{} {
+	ctx = context.Background()
+	//init firebase
+	opt := option.WithCredentialsFile("firebase.json")
+	app, err := firebase.NewApp(ctx, nil, opt)
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+
+	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection("Beneficiary")
+
+	res, err := iter.Doc("Profile").Get(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	return res.Data()
 
 }

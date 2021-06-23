@@ -58,6 +58,7 @@ func main() {
 
 	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
+	router.Use(CORSMiddleware())
 
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/assets", "./assets")
