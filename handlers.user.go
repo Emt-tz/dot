@@ -16,29 +16,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type customer struct {
-	Name    string
-	Email   string
-	Address *address
-}
-
-type address struct {
-	Street1 string
-	Street2 string
-	City    string
-	State   string
-	Zip     string `form:"label=Postal Code"`
-}
-
 //social innovators table struct is placed here
 type table struct {
-	Date          string
-	Impact        string
-	Intervention  string
-	Lead          string
-	Outcome       string
-	Participation string
-	Scoring       string
+	AIntervention  string
+	BLead          string
+	CDate          string
+	DParticipation string
+	EImpact        string
+	FScoring       string
+	GOutcome       string
 }
 
 //==============================================================user login and sign up handlers =========================
@@ -178,7 +164,7 @@ func UserEdit(c *gin.Context) {
 		response["uploaded"] = 0
 		c.JSON(http.StatusOK, gin.H{
 			"code":    http.StatusOK,
-			"message": response["uploaded"], // cast it to string before showing
+			"message": response["uploaded"], 
 		})
 	} else {
 		v := edituser(usermodel.Email, Fname, Lname, Address, City, Country, Code)
@@ -186,13 +172,13 @@ func UserEdit(c *gin.Context) {
 			response["uploaded"] = 1
 			c.JSON(http.StatusOK, gin.H{
 				"code":    http.StatusOK,
-				"message": response["uploaded"], // cast it to string before showing
+				"message": response["uploaded"],
 			})
 		} else {
 			response["uploaded"] = 2
 			c.JSON(http.StatusOK, gin.H{
 				"code":    http.StatusOK,
-				"message": response["uploaded"], // cast it to string before showing
+				"message": response["uploaded"], 
 			})
 		}
 	}
@@ -205,23 +191,60 @@ func UserEdit(c *gin.Context) {
 //social innovators section handler
 //route is test
 func SocialInnovators_progress_handler(c *gin.Context) {
-	//get the query parameters values
+	//this will handle both url queries
+	if c.Query("edit") == "table1"{
+		if c.Query("Detail") != "" || c.Query("Value") != "" {
 
-	tableid := c.Query("id")
-
-	data := table{
-		Date:          c.Query("Date"),
-		Impact:        c.Query("Impact"),
-		Intervention:  c.Query("Intervention"),
-		Lead:          c.Query("Lead"),
-		Outcome:       c.Query("Outcome"),
-		Participation: c.Query("Participation"),
-		Scoring:       c.Query("Scoring"),
+			tableid := c.Query("table")+c.Query("id")
+			data := map[string]interface{}{
+				c.Query("Detail"): c.Query("Value"),
+			}
+			response := update_social_beneficiaries_progress("Beneficiary", tableid, data)
+			if response == nil {
+				c.JSON(http.StatusOK, gin.H{"response": "submitted"})
+			} else {
+				c.JSON(http.StatusOK, gin.H{"response": response.Error()})
+			}
+		} else {
+			c.JSON(http.StatusOK, gin.H{"response": "empty values to submit"})
+		}
+	} else if c.Query("edit") == "table" {
+		if c.Query("table") != "" {
+			tableid := c.Query("id")
+	
+			data := table{
+				AIntervention:  c.Query("Intervention"),
+				BLead:          c.Query("Lead"),
+				CDate:          c.Query("Date"),
+				DParticipation: c.Query("Participation"),
+				EImpact:        c.Query("Impact"),
+				FScoring:       c.Query("Scoring"),
+				GOutcome:       c.Query("Outcome"),
+			}
+			response := update_social_beneficiaries_progress("Beneficiary", c.Query("table")+tableid, data)
+	
+			if response == nil {
+				c.JSON(http.StatusOK, gin.H{"response": "submitted"})
+			} else {
+				c.JSON(http.StatusOK, gin.H{"response": response.Error()})
+			}
+		} else{
+			c.JSON(http.StatusOK, gin.H{"response": "empty values to submit"})
+		}
 	}
-	response := update_social_beneficiaries_progress("Beneficiary", tableid, data)
+	
 
-	c.JSON(http.StatusOK, gin.H{"response": response})
+}
 
+//route is test
+func SocialInnovators_profile_handler_get(c *gin.Context) {
+	response := get_social_beneficiaries_progress("Beneficiary")
+
+	//	// } else {
+	// 	c.JSON(http.StatusOK, gin.H{"response": "error"})
+	// }
+
+	c.HTML(http.StatusOK, "table.html", response)
 }
 
 func SocialInnovators_profile_handler(c *gin.Context) {

@@ -24,20 +24,6 @@ type user struct {
 	Category  string
 }
 
-var data = map[string]interface{}{
-	"id":        usermodel.Email,
-	"Title":     usermodel.Title,
-	"Email":     usermodel.Email,
-	"FirstName": usermodel.FirstName,
-	"LastName":  usermodel.LastName,
-	"Address":   usermodel.Address,
-	"City":      usermodel.City,
-	"Country":   usermodel.Country,
-	"Code":      usermodel.Code,
-	"Image":     "../assets/anime3.png",
-	"Category":  usermodel.Category,
-}
-
 var router *gin.Engine
 
 // var app *firebase.App
@@ -67,10 +53,6 @@ func main() {
 
 	// Start serving the application
 	router.Run()
-}
-
-func session() {
-
 }
 
 func render(c *gin.Context, data gin.H, templateName string) {

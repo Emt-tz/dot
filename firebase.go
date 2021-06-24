@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"fmt"
 
 	"io"
 	"log"
@@ -15,6 +16,7 @@ import (
 	"google.golang.org/api/option"
 )
 
+//================================================platform user firebase function =============================================
 func loaduser_by_email(id string) string {
 
 	if err != nil {
@@ -50,10 +52,7 @@ func loaduser_by_pass(id string) []byte {
 }
 
 func adduser(id string, data map[string]interface{}) error {
-	ctx = context.Background()
-	//init firebase
-	opt := option.WithCredentialsFile("firebase.json")
-	app, err := firebase.NewApp(ctx, nil, opt)
+	
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
 	}
@@ -73,10 +72,7 @@ func adduser(id string, data map[string]interface{}) error {
 }
 
 func edituser(id string, FirstName []string, LastName []string, Address []string, City []string, Country []string, Code []string) error {
-	ctx = context.Background()
-	//init firebase
-	opt := option.WithCredentialsFile("firebase.json")
-	app, err := firebase.NewApp(ctx, nil, opt)
+	
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
 	}
@@ -101,6 +97,9 @@ func edituser(id string, FirstName []string, LastName []string, Address []string
 
 	return nil
 }
+//================================================ end platform user firebase function =============================================
+
+//================================================upload file firebase function ====================================================
 
 func Upload(id string, fileInput []byte, fileName string) error {
 
@@ -132,70 +131,32 @@ func Upload(id string, fileInput []byte, fileName string) error {
 	return nil
 
 }
+//================================================upload file firebase function ====================================================
 
-func jsonupload(id string, data map[string]interface{}) error {
-	ctx = context.Background()
-	//init firebase
-	opt := option.WithCredentialsFile("firebase.json")
-	app, err := firebase.NewApp(ctx, nil, opt)
-	if err != nil {
-		log.Fatalln("error initializing app: ", err)
-	}
-	client, err = app.Firestore(ctx)
-	if err != nil {
-		return err
-	}
-	defer client.Close()
 
-	_, err = client.Collection("programs").Doc(id).Set(ctx, data)
-
-	if err != nil {
-		return err
-	}
-	return err
-}
-
-func loadprograms(programname string) map[string]interface{} {
-	if err != nil {
-		log.Fatalln("error initializing app: ", err)
-	}
-	client, err = app.Firestore(ctx)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer client.Close()
-
-	load_user, _ := client.Collection("programs").Doc(programname).Get(ctx)
-
-	//mapstructure.Decode(load_user.Data(), &usermodel)
-	return load_user.Data()
-}
-
-func addbeneficiaries(id string, data map[string]interface{}) error {
-	ctx = context.Background()
-	//init firebase
-	opt := option.WithCredentialsFile("firebase.json")
-	app, err := firebase.NewApp(ctx, nil, opt)
-	if err != nil {
-		log.Fatalln("error initializing app: ", err)
-	}
-	client, err = app.Firestore(ctx)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer client.Close()
-
-	_, err = client.Collection("social_beneficiaries").Doc(id).Set(ctx, data)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return nil
-
-}
-
+//===================================================programs firebase function ====================================================
 //social innovation function is placed here
+func get_social_beneficiaries_progress(Beneficiary string) map[string]interface{} {
+
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+
+	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection(Beneficiary)
+
+	res, err := iter.Doc("Progress").Get(ctx)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return res.Data()
+
+}
 func update_social_beneficiaries_progress(Beneficiary string, Table string, data interface{}) error {
 	ctx = context.Background()
 	//init firebase
@@ -223,30 +184,6 @@ func update_social_beneficiaries_progress(Beneficiary string, Table string, data
 	}
 
 }
-func social_beneficiaries_progress() map[string]interface{} {
-	ctx = context.Background()
-	//init firebase
-	opt := option.WithCredentialsFile("firebase.json")
-	app, err := firebase.NewApp(ctx, nil, opt)
-	if err != nil {
-		log.Fatalln("error initializing app: ", err)
-	}
-	client, err = app.Firestore(ctx)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer client.Close()
-
-	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection("Beneficiary")
-
-	res, err := iter.Doc("Progress").Get(ctx)
-	if err != nil {
-		panic(err)
-	}
-
-	return res.Data()
-
-}
 
 func social_beneficiaries_profile() map[string]interface{} {
 	ctx = context.Background()
@@ -272,3 +209,4 @@ func social_beneficiaries_profile() map[string]interface{} {
 	return res.Data()
 
 }
+//===================================================programs firebase function ====================================================

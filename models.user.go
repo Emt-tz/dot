@@ -9,8 +9,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var username string
-var Category string
 
 // Check if the username and password combination is valid
 func isUserValid(email string, password string) error {

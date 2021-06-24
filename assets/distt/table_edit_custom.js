@@ -1,29 +1,33 @@
 $(document).ready(function() {
     $('#data_table').Tabledit({
         deleteButton: false,
-        editButton: false,
+        editButton: true,
         columns: {
-            identifier: [0, 'Key'],
+            identifier: [0, 'id'],
             editable: [
-                [1, 'Name, Company, Sector'],
-                [2, 'Number of founders'],
-                [3, 'Level of Innovation on Joining Dare 2020'],
-                [4, 'Current Level of the innovation'],
-                [5, 'Pivoted or Preserved'],
-                [6, 'Email Address'],
-                [7, 'Phone Number'],
-                [8, 'Gender'],
-                [9, 'Date Joined'],
-                [10, 'Moodle Completion'],
-                [11, 'Important Links'],
+                [1, "Detail"],
+                [2, "Value"],
+
             ]
         },
         hideIdentifier: true,
-        url: ""
+        url: null,
+        onAjax: function(action, serialize) {
+            console.log(serialize);
+            var url = "http://127.0.0.1:8080/test?edit=table1&table=Table.&" + serialize;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.response);
+                })
+                .catch(err => console.log(err))
+
+        }
     });
 });
 
 $(document).ready(function() {
+    var url;
     $('#data_table1').Tabledit({
         deleteButton: false,
         editButton: true,
@@ -40,8 +44,23 @@ $(document).ready(function() {
             ]
         },
         hideIdentifier: true,
-        url: "test"
+        onAjax: function(action, serialize) {
+            console.log('onAjax(action, serialize)');
+            console.log(action);
+            console.log(serialize);
+            var url = "http://127.0.0.1:8080/test?edit=table&table=Table2.&" + serialize;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.response);
+                })
+                .catch(err => console.log(err))
+
+        }
+
+
     });
+
 });
 
 $(document).ready(function() {
@@ -61,7 +80,25 @@ $(document).ready(function() {
             ]
         },
         hideIdentifier: true,
-        url: ""
+        onAjax: function(action, serialize) {
+            console.log('onAjax(action, serialize)');
+            console.log(action);
+            console.log(serialize);
+            var url = "http://127.0.0.1:8080/test?edit=table&table=Table3.&" + serialize;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.response);
+                })
+                .catch(err => console.log(err))
+
+        },
+        onFail: function(jqXHR, textStatus, errorThrown) {
+            console.log('onFail(jqXHR, textStatus, errorThrown)');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        },
     });
 });
 
@@ -82,6 +119,18 @@ $(document).ready(function() {
             ]
         },
         hideIdentifier: true,
-        url: ""
+        onAjax: function(action, serialize) {
+            console.log('onAjax(action, serialize)');
+            console.log(action);
+            console.log(serialize);
+            var url = "http://127.0.0.1:8080/test?edit=table&table=Table4.&" + serialize;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.response);
+                })
+                .catch(err => console.log(err))
+
+        }
     });
 });

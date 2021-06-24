@@ -186,9 +186,13 @@ func initializeRoutes() {
 	})
 
 	router.GET("/test", SocialInnovators_progress_handler)
-	router.GET("/test2", SocialInnovators_profile_handler)
+	router.GET("/test2", SocialInnovators_profile_handler_get)
+
 	router.GET("/test3", func(c *gin.Context) {
-		render(c, gin.H{"title": "none"}, "table.html")
+		render(c, gin.H{
+			"title": "Beneficiary Form",
+			"Image": "../assets/img/anime3.png",
+		}, "beneficiary_form.html")
 	})
 
 }

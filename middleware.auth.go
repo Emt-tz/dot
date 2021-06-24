@@ -28,22 +28,6 @@ func ensureLoggedIn() gin.HandlerFunc {
 		}
 	}
 }
-
-func ensureToregister() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		loggedInInterface, _ := c.Get("is_logged_in")
-		loggedIn := loggedInInterface.(bool)
-		if loggedIn {
-			if token, err := c.Cookie("token"); err != nil || token != "" {
-				c.Redirect(http.StatusMovedPermanently, "/register")
-			} else {
-				c.Redirect(http.StatusMovedPermanently, "/Dashboard")
-			}
-
-		}
-	}
-}
-
 // This middleware ensures that a request will be aborted with an error
 // if the user is already logged in
 func ensureNotLoggedIn() gin.HandlerFunc {
