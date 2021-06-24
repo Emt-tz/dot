@@ -10,7 +10,7 @@ func initializeRoutes() {
 
 	adminRoutes := router.Group("auth")
 	{
-		adminRoutes.GET("/admin", ensureLoggedIn(), func(c *gin.Context) {
+		adminRoutes.GET("/admin", ensureLoggedIn("/admin"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Administrator",
 				"Image": "../assets/img/anime3.png",
@@ -20,38 +20,38 @@ func initializeRoutes() {
 
 	userRoutes := router.Group("")
 	{
-		userRoutes.GET("/login", ensureNotLoggedIn(), showLoginPage)
-		userRoutes.POST("/login", ensureNotLoggedIn(), performLogin)
-		userRoutes.GET("/logout", ensureLoggedIn(), logout)
+		userRoutes.GET("/login", ensureNotLoggedIn("/Dashboard"), showLoginPage)
+		userRoutes.POST("/login", ensureNotLoggedIn("/Dashboard"), performLogin)
+		userRoutes.GET("/logout", ensureLoggedIn("/logout"), logout)
 		userRoutes.GET("/register", showRegistrationPage)
-		userRoutes.POST("/p/register", ensureNotLoggedIn(), register)
+		userRoutes.POST("/p/register", ensureNotLoggedIn("/login"), register)
 
-		userRoutes.GET("/admin", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/admin", ensureLoggedIn("/admin"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Administrator",
 				"Image": "../assets/img/anime3.png",
 			}, "admin.html")
 		})
 
-		userRoutes.GET("/dashboard", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/dashboard", ensureLoggedIn("/dashboard"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Dashboard",
 				"Image": "../assets/img/anime3.png",
 			}, "index.html")
 		})
-		userRoutes.GET("/statistics", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/statistics", ensureLoggedIn("/statistics"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Statistics",
 				"Image": "../assets/img/anime3.png",
 			}, "dashboard.html")
 		})
-		userRoutes.GET("/survey", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/survey", ensureLoggedIn("/survey"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Survey",
 				"Image": "../assets/img/anime3.png",
 			}, "survey.html")
 		})
-		userRoutes.GET("/user", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/user", ensureLoggedIn("/user"), func(c *gin.Context) {
 			FirstName := ""
 			LastName := ""
 			Address := ""
@@ -90,57 +90,57 @@ func initializeRoutes() {
 				"Category":  usermodel.Category,
 			}, "user.html")
 		})
-		userRoutes.GET("/programs", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/programs", ensureLoggedIn("/programs"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Programs",
 				"Image": "../assets/img/anime3.png",
 			}, "programs.html")
 		})
-		userRoutes.GET("/table", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/table", ensureLoggedIn("/table"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Tables",
 				"Image": "../assets/img/anime3.png",
 			}, "tables.html")
 		})
-		userRoutes.GET("/gallery", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/gallery", ensureLoggedIn("/gallery"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Gallery",
 				"Image": "../assets/img/anime3.png",
 			}, "gallery.html")
 		})
-		userRoutes.GET("/explore", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/explore", ensureLoggedIn("/explore"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Explore",
 				"Image": "../assets/img/anime3.png",
 			}, "explore.html")
 		})
 		//beneficiaries url
-		userRoutes.GET("/socialbeneficiaries", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/socialbeneficiaries", ensureLoggedIn("/socialbeneficiaries"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Socialent",
 				"Image": "../assets/img/anime3.png",
 			}, "socialent.html")
 		})
-		userRoutes.GET("/digitaljob", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/digitaljob", ensureLoggedIn("/digitaljob"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Digital Job",
 				"Image": "../assets/img/anime3.png",
 			}, "digitaljob.html")
 		})
-		userRoutes.GET("/digitalbus", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/digitalbus", ensureLoggedIn("/digitalbus"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Digital Bus",
 				"Image": "../assets/img/anime3.png",
 			}, "digitalbus.html")
 		})
-		userRoutes.GET("/tyds", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/tyds", ensureLoggedIn("/tyds"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "TYDS",
 				"Image": "../assets/img/anime3.png",
 			}, "tyds.html")
 		})
 		//beneficiaries routes
-		userRoutes.GET("/beneficiariesSE.html", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/beneficiariesSE.html", ensureLoggedIn("/beneficiariesSE.html"), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Beneficiaries",
 				"Image": "../assets/img/anime3.png",
@@ -148,7 +148,7 @@ func initializeRoutes() {
 		})
 
 	}
-	router.GET("/", ensureNotLoggedIn(), func(c *gin.Context) {
+	router.GET("/", ensureNotLoggedIn("/"), func(c *gin.Context) {
 		render(c, gin.H{
 			"title": "Tables",
 		}, "sign-in.html")
@@ -178,17 +178,16 @@ func initializeRoutes() {
 		})
 	})
 
+	router.GET("/progress", ensureLoggedIn("/progress"), SocialInnovators_profile_handler_get) //progress get
+	router.GET("p/progress",  ensureLoggedIn("p/progress"), SocialInnovators_progress_handler) //progress post
 	router.GET("/tre", func(c *gin.Context) {
 		render(c, gin.H{
 			"title": "Administrator",
 			"Image": "../assets/img/anime3.png",
 		}, "programstable.html")
 	})
-
-	router.GET("/test", SocialInnovators_progress_handler)
-	router.GET("/test2", SocialInnovators_profile_handler_get)
-
-	router.GET("/test3", func(c *gin.Context) {
+	
+	router.GET("/test", func(c *gin.Context) {
 		render(c, gin.H{
 			"title": "Beneficiary Form",
 			"Image": "../assets/img/anime3.png",

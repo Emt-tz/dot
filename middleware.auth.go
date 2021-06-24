@@ -10,7 +10,7 @@ import (
 
 // This middleware ensures that a request will be aborted with an error
 // if the user is not logged in
-func ensureLoggedIn() gin.HandlerFunc {
+func ensureLoggedIn(path string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// If there's an error or if the token is empty
 		// the user is not logged in
@@ -22,7 +22,7 @@ func ensureLoggedIn() gin.HandlerFunc {
 			if token, err := c.Cookie("token"); err != nil || token == "" {
 				c.Redirect(http.StatusMovedPermanently, "/login")
 			} else {
-				c.Redirect(http.StatusMovedPermanently, "/Dashboard")
+				c.Redirect(http.StatusMovedPermanently, path)
 			}
 
 		}
@@ -30,7 +30,7 @@ func ensureLoggedIn() gin.HandlerFunc {
 }
 // This middleware ensures that a request will be aborted with an error
 // if the user is already logged in
-func ensureNotLoggedIn() gin.HandlerFunc {
+func ensureNotLoggedIn(path string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// If there's no error or if the token is not empty
 		// the user is already logged in
@@ -40,7 +40,7 @@ func ensureNotLoggedIn() gin.HandlerFunc {
 			if token, err := c.Cookie("token"); err != nil || token != "" {
 				c.Redirect(http.StatusMovedPermanently, "/logout")
 			} else {
-				c.Redirect(http.StatusMovedPermanently, "/Dashboard")
+				c.Redirect(http.StatusMovedPermanently, path)
 			}
 
 		}
