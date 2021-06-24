@@ -14,7 +14,7 @@ $(document).ready(function() {
         url: null,
         onAjax: function(action, serialize) {
             console.log(serialize);
-            var url = "http://127.0.0.1:8080/test?edit=table1&table=Table.&" + serialize;
+            var url = "p/progress?edit=table1&table=Table.&" + serialize;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -48,7 +48,7 @@ $(document).ready(function() {
             console.log('onAjax(action, serialize)');
             console.log(action);
             console.log(serialize);
-            var url = "http://127.0.0.1:8080/test?edit=table&table=Table2.&" + serialize;
+            var url = "p/progress?edit=table&table=Table2.&" + serialize;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -84,7 +84,7 @@ $(document).ready(function() {
             console.log('onAjax(action, serialize)');
             console.log(action);
             console.log(serialize);
-            var url = "http://127.0.0.1:8080/test?edit=table&table=Table3.&" + serialize;
+            var url = "p/progress?edit=table&table=Table3.&" + serialize;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -123,7 +123,7 @@ $(document).ready(function() {
             console.log('onAjax(action, serialize)');
             console.log(action);
             console.log(serialize);
-            var url = "http://127.0.0.1:8080/test?edit=table&table=Table4.&" + serialize;
+            var url = "p/progress?edit=table&table=Table4.&" + serialize;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {

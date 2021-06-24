@@ -164,7 +164,7 @@ func UserEdit(c *gin.Context) {
 		response["uploaded"] = 0
 		c.JSON(http.StatusOK, gin.H{
 			"code":    http.StatusOK,
-			"message": response["uploaded"], 
+			"message": response["uploaded"],
 		})
 	} else {
 		v := edituser(usermodel.Email, Fname, Lname, Address, City, Country, Code)
@@ -178,7 +178,7 @@ func UserEdit(c *gin.Context) {
 			response["uploaded"] = 2
 			c.JSON(http.StatusOK, gin.H{
 				"code":    http.StatusOK,
-				"message": response["uploaded"], 
+				"message": response["uploaded"],
 			})
 		}
 	}
@@ -192,10 +192,10 @@ func UserEdit(c *gin.Context) {
 //route is test
 func SocialInnovators_progress_handler(c *gin.Context) {
 	//this will handle both url queries
-	if c.Query("edit") == "table1"{
+	if c.Query("edit") == "table1" {
 		if c.Query("Detail") != "" || c.Query("Value") != "" {
 
-			tableid := c.Query("table")+c.Query("id")
+			tableid := c.Query("table") + c.Query("id")
 			data := map[string]interface{}{
 				c.Query("Detail"): c.Query("Value"),
 			}
@@ -211,7 +211,7 @@ func SocialInnovators_progress_handler(c *gin.Context) {
 	} else if c.Query("edit") == "table" {
 		if c.Query("table") != "" {
 			tableid := c.Query("id")
-	
+
 			data := table{
 				AIntervention:  c.Query("Intervention"),
 				BLead:          c.Query("Lead"),
@@ -222,29 +222,26 @@ func SocialInnovators_progress_handler(c *gin.Context) {
 				GOutcome:       c.Query("Outcome"),
 			}
 			response := update_social_beneficiaries_progress("Beneficiary", c.Query("table")+tableid, data)
-	
+
 			if response == nil {
 				c.JSON(http.StatusOK, gin.H{"response": "submitted"})
 			} else {
 				c.JSON(http.StatusOK, gin.H{"response": response.Error()})
 			}
-		} else{
+		} else {
 			c.JSON(http.StatusOK, gin.H{"response": "empty values to submit"})
 		}
 	}
-	
 
 }
 
 //route is test
 func SocialInnovators_profile_handler_get(c *gin.Context) {
+
 	response := get_social_beneficiaries_progress("Beneficiary")
 
-	//	// } else {
-	// 	c.JSON(http.StatusOK, gin.H{"response": "error"})
-	// }
+	render(c, response, "table.html")
 
-	c.HTML(http.StatusOK, "table.html", response)
 }
 
 func SocialInnovators_profile_handler(c *gin.Context) {
