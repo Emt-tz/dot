@@ -17,7 +17,7 @@ import (
 )
 
 //================================================platform user firebase function =============================================
-func loaduser_by_email(id string) string {
+func loaduser_by_email(id string) (string,string) {
 
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
@@ -31,7 +31,7 @@ func loaduser_by_email(id string) string {
 	load_user, _ := client.Collection("users").Doc(id).Get(ctx)
 
 	mapstructure.Decode(load_user.Data(), &usermodel)
-	return usermodel.Email
+	return usermodel.Email,usermodel.Category
 
 }
 

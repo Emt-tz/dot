@@ -36,13 +36,25 @@ func showLoginPage(c *gin.Context) {
 	}, "sign-in.html")
 }
 
+func user_category_urls(category string) string{
+	if category == "Community Leader"{
+		return "/digitalbusiness"
+	}else if category == "Social Innovator"{
+		return "/si"
+	}else if category == "Digital Ambasador"{
+		return "/digitaljob"
+	} else {
+		return "/tyds"
+	} 
+}
+
 func performLogin(c *gin.Context) {
 
 	// Obtain the POSTed username and password values
 	email := c.PostForm("inputEmail")
 	password := c.PostForm("inputPassword")
 
-	err := isUserValid(email, password)
+	category,err := isUserValid(email, password)
 	// Check if the email/password combination is valid
 
 	//now to differentiate admin from normal user
@@ -57,12 +69,13 @@ func performLogin(c *gin.Context) {
 			c.Redirect(http.StatusMovedPermanently, "auth/admin")
 
 		} else {
+			path := user_category_urls(category)
 			// If the username/password is valid set the token in a cookie
 			token := generateSessionToken()
 			c.SetCookie("token", token, 3600, "", "", false, true)
 			c.Set("is_logged_in", true)
 			// session.Save()
-			c.Redirect(http.StatusMovedPermanently, "/dashboard")
+			c.Redirect(http.StatusMovedPermanently, path)
 		}
 
 	} else {
@@ -117,7 +130,7 @@ func register(c *gin.Context) {
 
 		fmt.Println(hashedpassword)
 
-		em := loaduser_by_email(email)
+		em,_ := loaduser_by_email(email)
 		register_user := registerNewUser(email, username, email, hashedpassword, Category)
 
 		if em != email {
@@ -240,7 +253,7 @@ func SocialInnovators_profile_handler_get(c *gin.Context) {
 
 	response := get_social_beneficiaries_progress("Beneficiary")
 
-	render(c, response, "table.html")
+	render(c, response, "siprofile.html")
 
 }
 

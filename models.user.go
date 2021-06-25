@@ -11,17 +11,17 @@ import (
 
 
 // Check if the username and password combination is valid
-func isUserValid(email string, password string) error {
+func isUserValid(email string, password string) (string,error) {
 	//compare hash of passwords then proceed
 
-	user_login := loaduser_by_email(email)
+	user_login,category := loaduser_by_email(email)
 	pass_word := loaduser_by_pass(email)
 	userpass := bcrypt.CompareHashAndPassword(pass_word, []byte(password))
 	if user_login == email && userpass == nil {
 		fmt.Printf("Document data: %#v\n", user_login)
-		return nil
+		return category,nil
 	} else {
-		return fmt.Errorf(userpass.Error())
+		return "",fmt.Errorf(userpass.Error())
 	}
 
 }

@@ -46,8 +46,11 @@ func main() {
 	router = gin.Default()
 	router.Use(CORSMiddleware())
 
-	router.LoadHTMLGlob("templates/*")
+	router.LoadHTMLGlob("templates/*/*.html")
 	router.Static("/assets", "./assets")
+	router.NoRoute(func(c *gin.Context) {
+		c.HTML(404, "404.html",gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
+	})
 
 	initializeRoutes()
 
