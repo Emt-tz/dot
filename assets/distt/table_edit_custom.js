@@ -1,7 +1,19 @@
 $(document).ready(function() {
     $('#data_table').Tabledit({
-        deleteButton: false,
-        editButton: true,
+        deleteButton: true,
+        editButton:true,
+        buttons: {
+            edit: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-edit"></i>',
+                action: 'edit'
+            },
+            delete: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-trash"></i>',
+                action: 'delete'
+            },
+        },
         columns: {
             identifier: [0, 'id'],
             editable: [
@@ -15,6 +27,7 @@ $(document).ready(function() {
         onAjax: function(action, serialize) {
             console.log(serialize);
             var url = "p/progress?edit=table1&table=Table.&" + serialize;
+            console.log(url);
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -29,8 +42,20 @@ $(document).ready(function() {
 $(document).ready(function() {
     var url;
     $('#data_table1').Tabledit({
-        deleteButton: false,
-        editButton: true,
+        deleteButton: true,
+        editButton:true,
+        buttons: {
+            edit: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-edit"></i>',
+                action: 'edit'
+            },
+            delete: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-trash"></i>',
+                action: 'delete'
+            },
+        },
         columns: {
             identifier: [0, 'id'],
             editable: [
@@ -65,8 +90,20 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#data_table2').Tabledit({
-        deleteButton: false,
-        editButton: true,
+        deleteButton: true,
+        editButton:true,
+        buttons: {
+            edit: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-edit"></i>',
+                action: 'edit'
+            },
+            delete: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-trash"></i>',
+                action: 'delete'
+            },
+        },
         columns: {
             identifier: [0, 'id'],
             editable: [
@@ -104,8 +141,20 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#data_table3').Tabledit({
-        deleteButton: false,
-        editButton: true,
+        deleteButton: true,
+        editButton:true,
+        buttons: {
+            edit: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-edit"></i>',
+                action: 'edit'
+            },
+            delete: {
+                class: 'btn btn-sm btn-default',
+                html: '<i class="fa fa-trash"></i>',
+                action: 'delete'
+            },
+        },
         columns: {
             identifier: [0, 'id'],
             editable: [
@@ -134,3 +183,4 @@ $(document).ready(function() {
         }
     });
 });
+

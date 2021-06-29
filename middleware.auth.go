@@ -50,8 +50,16 @@ func setUserStatus() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if token, err := c.Cookie("token"); err == nil || token != "" {
 			c.Set("is_logged_in", true)
+			c.Set("is_admin", false)
+			if token, err := c.Cookie("admin");err == nil || token != ""{
+				c.Set("is_admin", true)
+			}else{
+				c.Set("is_admin", false)
+			}
 		} else {
 			c.Set("is_logged_in", false)
+			c.Set("is_admin", false)
+			
 		}
 	}
 }

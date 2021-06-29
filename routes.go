@@ -1,22 +1,29 @@
 package main
 
 import (
+	"context"
+	"log"
+
+	"cloud.google.com/go/firestore"
+	firebase "firebase.google.com/go"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/api/iterator"
+	"google.golang.org/api/option"
 )
 
 func initializeRoutes() {
 
 	router.Use(setUserStatus())
 
-	adminRoutes := router.Group("auth")
-	{
-		adminRoutes.GET("/admin", ensureLoggedIn(), func(c *gin.Context) {
-			render(c, gin.H{
-				"title": "Administrator",
-				"Image": "../assets/img/anime3.png",
-			}, "admin.html")
-		})
-	}
+	// adminRoutes := router.Group("auth")
+	// {
+	// 	adminRoutes.GET("/admin", ensureLoggedIn(), func(c *gin.Context) {
+	// 		render(c, gin.H{
+	// 			"title": "Administrator",
+	// 			"Image": "../assets/img/anime3.png",
+	// 		}, "admin.html")
+	// 	})
+	// }
 
 	userRoutes := router.Group("")
 	{
@@ -118,10 +125,17 @@ func initializeRoutes() {
 				"Category":  usermodel.Category,
 			}, "user.html")
 		})
-		
+
 		//===============================end user routes here ========================//
 		//===============================desired program routes ======================//
 		//======================social innovator routes ==========//
+		//si program edit
+		userRoutes.GET("/si/profile-edit", ensureLoggedIn(), func(c *gin.Context) {
+			render(c, gin.H{
+				"title": "Socialent",
+				"Image": "../assets/img/anime3.png",
+			}, "table.html")
+		})
 		userRoutes.GET("/si", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Socialent",
@@ -181,7 +195,7 @@ func initializeRoutes() {
 				"Category":  usermodel.Category,
 			}, "siuser.html")
 		})
-		
+
 		//======================end social innovator routes =======//
 		//======================digital bussines routes ==========//
 		userRoutes.GET("/digitalbusiness", ensureLoggedIn(), func(c *gin.Context) {
@@ -346,8 +360,7 @@ func initializeRoutes() {
 				"Image": "../assets/img/anime3.png",
 			}, "tyds_bene_profile.html")
 		})
-		
-		
+
 		//tyds user
 		userRoutes.GET("/tyds/user", ensureLoggedIn(), func(c *gin.Context) {
 			FirstName := ""
@@ -399,7 +412,7 @@ func initializeRoutes() {
 		})
 
 		//shared routes are place here
-		userRoutes.GET("p/progress", ensureLoggedIn(), SocialInnovators_progress_handler) //progress post
+		userRoutes.GET("/si/p/progress", ensureLoggedIn(), SocialInnovators_progress_handler) //progress post
 
 	}
 
@@ -417,6 +430,40 @@ func initializeRoutes() {
 			"title": "Beneficiary Form",
 			"Image": "../assets/img/anime3.png",
 		}, "beneficiary_form.html")
+	})
+
+	router.GET("/test2", func(c *gin.Context) {
+		ctx = context.Background()
+		//init firebase
+		opt := option.WithCredentialsFile("firebase.json")
+		app, err := firebase.NewApp(ctx, nil, opt)
+		if err != nil {
+			log.Fatalln("error initializing app: ", err)
+		}
+		client, err = app.Firestore(ctx)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		defer client.Close()
+
+		iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collections(ctx)
+		//var response interface{}
+		// var slice []interface{}
+		var collRef *firestore.CollectionRef
+		for {
+
+			collRef, err = iter.Next()
+			if err != nil {
+				c.JSON(200, err.Error())
+			}
+
+			if err == iterator.Done {
+				break
+			}
+
+		}
+		render(c, gin.H{"id": collRef.ID}, "si_beneficiaries.html")
+
 	})
 
 }

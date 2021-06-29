@@ -9,52 +9,38 @@ import (
 	"net/http"
 	"net/mail"
 	"strconv"
-
 	// "github.com/gin-contrib/sessions"
-
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
 
-//social innovators table struct is placed here
-type table struct {
-	AIntervention  string
-	BLead          string
-	CDate          string
-	DParticipation string
-	EImpact        string
-	FScoring       string
-	GOutcome       string
-}
-
 //==============================================================user login and sign up handlers =========================
 func showLoginPage(c *gin.Context) {
-
 	// Call the render function with the name of the template to render
 	render(c, gin.H{
 		"title": "Login",
 	}, "sign-in.html")
 }
 
-func user_category_urls(category string) string{
-	if category == "Community Leader"{
+func user_category_urls(category string) string {
+	if category == "Community Leader" {
 		return "/digitalbusiness"
-	}else if category == "Social Innovator"{
+	} else if category == "Social Innovator" {
 		return "/si"
-	}else if category == "Digital Ambasador"{
+	} else if category == "Digital Ambasador" {
 		return "/digitaljob"
 	} else {
 		return "/tyds"
-	} 
+	}
 }
 
 func performLogin(c *gin.Context) {
 
-	// Obtain the POSTed username and password values
+	// Obtain the Posted username and password values
 	email := c.PostForm("inputEmail")
 	password := c.PostForm("inputPassword")
 
-	category,err := isUserValid(email, password)
+	category, err := isUserValid(email, password)
 	// Check if the email/password combination is valid
 
 	//now to differentiate admin from normal user
@@ -64,9 +50,11 @@ func performLogin(c *gin.Context) {
 			// If the username/password is valid set the token in a cookie
 			token := generateSessionToken()
 			c.SetCookie("token", token, 3600, "", "", false, true)
+			c.SetCookie("admin", token, 3600, "","", false, true )
 			c.Set("is_logged_in", true)
+			c.Set("is_admin", true)
 			// session.Save()
-			c.Redirect(http.StatusMovedPermanently, "auth/admin")
+			c.Redirect(http.StatusMovedPermanently, "/admin")
 
 		} else {
 			path := user_category_urls(category)
@@ -74,6 +62,7 @@ func performLogin(c *gin.Context) {
 			token := generateSessionToken()
 			c.SetCookie("token", token, 3600, "", "", false, true)
 			c.Set("is_logged_in", true)
+			c.Set("is_admin", false)
 			// session.Save()
 			c.Redirect(http.StatusMovedPermanently, path)
 		}
@@ -94,6 +83,7 @@ func generateSessionToken() string {
 func logout(c *gin.Context) {
 
 	c.SetCookie("token", "", -1, "", "", true, true)
+	c.SetCookie("admin", "", -1, "", "", true, true)
 
 	render(c, gin.H{
 		"title": "Login"}, "sign-in.html")
@@ -130,7 +120,7 @@ func register(c *gin.Context) {
 
 		fmt.Println(hashedpassword)
 
-		em,_ := loaduser_by_email(email)
+		em, _ := loaduser_by_email(email)
 		register_user := registerNewUser(email, username, email, hashedpassword, Category)
 
 		if em != email {
@@ -202,10 +192,21 @@ func UserEdit(c *gin.Context) {
 
 //==============================================social innovation handlers =====================================================
 //social innovators section handler
+//social innovators table struct
+type table struct {
+	AIntervention  string
+	BLead          string
+	CDate          string
+	DParticipation string
+	EImpact        string
+	FScoring       string
+	GOutcome       string
+}
+
 //route is test
 func SocialInnovators_progress_handler(c *gin.Context) {
 	//this will handle both url queries
-	if c.Query("edit") == "table1" {
+	if c.Query("edit") == "table1" && c.Query("action") == "edit" {
 		if c.Query("Detail") != "" || c.Query("Value") != "" {
 
 			tableid := c.Query("table") + c.Query("id")
@@ -221,7 +222,7 @@ func SocialInnovators_progress_handler(c *gin.Context) {
 		} else {
 			c.JSON(http.StatusOK, gin.H{"response": "empty values to submit"})
 		}
-	} else if c.Query("edit") == "table" {
+	} else if c.Query("edit") == "table" && c.Query("action") == "edit"{
 		if c.Query("table") != "" {
 			tableid := c.Query("id")
 
@@ -244,16 +245,29 @@ func SocialInnovators_progress_handler(c *gin.Context) {
 		} else {
 			c.JSON(http.StatusOK, gin.H{"response": "empty values to submit"})
 		}
+	} else if c.Query("action") == "delete" {
+		tableid := c.Query("id")
+		response := delete_social_beneficiaries_progress("Beneficiary", c.Query("table")+tableid)
+		if response == nil {
+			c.JSON(http.StatusOK, gin.H{"response": "submitted"})
+		} else {
+			c.JSON(http.StatusOK, gin.H{"response": response.Error()})
+		}
 	}
 
 }
 
 //route is test
 func SocialInnovators_profile_handler_get(c *gin.Context) {
-
-	response := get_social_beneficiaries_progress("Beneficiary")
-
-	render(c, response, "siprofile.html")
+	beneficiary := c.Query("beneficiary")
+	response,err := get_social_beneficiaries_progress(beneficiary)
+	if err == nil {
+		render(c, gin.H{"title": "Profile"+beneficiary,
+	"Image": "../assets/img/anime3.png","bene":response}, "siprofile.html")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"response": err.Error()})
+	}
+	
 
 }
 

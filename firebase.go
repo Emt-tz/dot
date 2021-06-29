@@ -3,8 +3,6 @@ package main
 import (
 	"bytes"
 	"context"
-	"fmt"
-
 	"io"
 	"log"
 
@@ -12,12 +10,11 @@ import (
 	"cloud.google.com/go/storage"
 	firebase "firebase.google.com/go"
 	"github.com/mitchellh/mapstructure"
-
 	"google.golang.org/api/option"
 )
 
 //================================================platform user firebase function =============================================
-func loaduser_by_email(id string) (string,string) {
+func loaduser_by_email(id string) (string, string) {
 
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
@@ -31,7 +28,7 @@ func loaduser_by_email(id string) (string,string) {
 	load_user, _ := client.Collection("users").Doc(id).Get(ctx)
 
 	mapstructure.Decode(load_user.Data(), &usermodel)
-	return usermodel.Email,usermodel.Category
+	return usermodel.Email, usermodel.Category
 
 }
 
@@ -52,7 +49,7 @@ func loaduser_by_pass(id string) []byte {
 }
 
 func adduser(id string, data map[string]interface{}) error {
-	
+
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
 	}
@@ -72,7 +69,7 @@ func adduser(id string, data map[string]interface{}) error {
 }
 
 func edituser(id string, FirstName []string, LastName []string, Address []string, City []string, Country []string, Code []string) error {
-	
+
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
 	}
@@ -97,6 +94,7 @@ func edituser(id string, FirstName []string, LastName []string, Address []string
 
 	return nil
 }
+
 //================================================ end platform user firebase function =============================================
 
 //================================================upload file firebase function ====================================================
@@ -131,12 +129,12 @@ func Upload(id string, fileInput []byte, fileName string) error {
 	return nil
 
 }
-//================================================upload file firebase function ====================================================
 
+//================================================upload file firebase function ====================================================
 
 //===================================================programs firebase function ====================================================
 //social innovation function is placed here
-func get_social_beneficiaries_progress(Beneficiary string) map[string]interface{} {
+func get_social_beneficiaries_progress(Beneficiary string) (map[string]interface{}, error) {
 
 	if err != nil {
 		log.Fatalln("error initializing app: ", err)
@@ -151,10 +149,10 @@ func get_social_beneficiaries_progress(Beneficiary string) map[string]interface{
 
 	res, err := iter.Doc("Progress").Get(ctx)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 
-	return res.Data()
+	return res.Data(), nil
 
 }
 func update_social_beneficiaries_progress(Beneficiary string, Table string, data interface{}) error {
@@ -185,6 +183,31 @@ func update_social_beneficiaries_progress(Beneficiary string, Table string, data
 
 }
 
+func delete_social_beneficiaries_progress(Beneficiary string, Table string) error {
+	ctx = context.Background()
+	//init firebase
+	opt := option.WithCredentialsFile("firebase.json")
+	app, err := firebase.NewApp(ctx, nil, opt)
+	if err != nil {
+		log.Fatalln("error initializing app: ", err)
+	}
+	client, err = app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection(Beneficiary)
+	_, err = iter.Doc("Progress").Update(ctx, []firestore.Update{
+		{Path: Table, Value: firestore.Delete},
+	})
+
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
+}
+
 func social_beneficiaries_profile() map[string]interface{} {
 	ctx = context.Background()
 	//init firebase
@@ -209,4 +232,5 @@ func social_beneficiaries_profile() map[string]interface{} {
 	return res.Data()
 
 }
+
 //===================================================programs firebase function ====================================================

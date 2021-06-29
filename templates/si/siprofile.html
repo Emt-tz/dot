@@ -5,6 +5,10 @@
             <div class="card ">
                 <div class="card-header">
                     <h4 class="card-title"> Progress Tracking</h4>
+                    {{ if .is_admin }}
+                    <input type="button"  class="add-row btn-sm btn-info btn" value="Add Row">
+                    
+                    {{ end }}
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -14,16 +18,18 @@
                                     <th hidden>
                                         id
                                     </th>
+                                    
                                     <th>Detail</th>
                                     <th>Value</th>
                                 </tr>
 
                             </thead>
-                            <tbody>
-                                {{range $k, $v := .Table}}
-                                <tr>
+                            <tbody id="data_table_body">
+                                {{range $k, $v := .bene.Table}}
+                                <tr class="note-row">
                                     <td hidden>{{ $k }}</td>
                                     {{ range $tkey, $tval := $v}}
+                                    
                                     <td>{{ $tkey }}</td>
                                     <td>{{ $tval }}</td>
                                     {{end}}
@@ -37,12 +43,17 @@
             <div class="card ">
                 <div class="card-header">
                     <h4 class="card-title">Virtual Training (All)</h4>
+                    {{ if .is_admin }}
+                    <input type="button"  class="add-row1 btn-info btn" value="Add Row">
+                    
+                    {{ end }}
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table tablesorter " id="data_table1" style="overflow: hidden">
                             <thead class=" text-primary">
                                 <th hidden>Id</th>
+                                
                                 <th>Intervention</th>
                                 <th>Lead</th>
                                 <th>Date</th>
@@ -53,11 +64,13 @@
                                 </tr>
 
                             </thead>
-                            <tbody>
-                                {{range $k, $v := .Table2}}
-                                <tr>
+                            <tbody id="data_table_body1">
+                                {{range $k, $v := .bene.Table2}}
+                                <tr class="note-row1">
                                     <td hidden>{{ $k }}</td>
+                                    
                                     {{ range $tkey, $tval := $v}}
+                                    
                                     <td>{{ $tval }}</td>
                                     {{end}}
                                 </tr>
@@ -70,12 +83,17 @@
             <div class="card ">
                 <div class="card-header">
                     <h4 class="card-title">Bootcamp (Top 10)</h4>
+                    {{ if .is_admin }}
+                    <input type="button"  class="add-row2 btn-info btn" value="Add Row">
+                    
+                    {{ end }}
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table tablesorter " id="data_table2">
                             <thead class=" text-primary">
                                 <th hidden>Id</th>
+                                
                                 <th>Intervention</th>
                                 <th>Lead</th>
                                 <th>Date</th>
@@ -86,10 +104,11 @@
                                 </tr>
 
                             </thead>
-                            <tbody>
-                                {{range $k, $v := .Table3}}
-                                <tr>
+                            <tbody id="data_table_body2">
+                                {{range $k, $v := .bene.Table3}}
+                                <tr class="note-row2">
                                     <td hidden>{{ $k }}</td>
+                                    
                                     {{ range $tkey, $tval := $v}}
                                     <td>{{ $tval }}</td>
                                     {{end}}
@@ -104,12 +123,17 @@
             <div class="card ">
                 <div class="card-header">
                     <h4 class="card-title">Virtual Training (All)</h4>
+                    {{ if .is_admin }}
+                    <input type="button"  class="add-row3 btn-info btn" value="Add Row">
+                    
+                    {{ end }}
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table tablesorter " id="data_table3" style="overflow: hidden">
                             <thead class=" text-primary">
                                 <th hidden>Id</th>
+                                
                                 <th>Intervention</th>
                                 <th>Lead</th>
                                 <th>Date</th>
@@ -120,10 +144,11 @@
                                 </tr>
 
                             </thead>
-                            <tbody>
-                                {{range $k, $v := .Table4}}
-                                <tr>
+                            <tbody id="data_table_body3">
+                                {{range $k, $v := .bene.Table4}}
+                                <tr class="note-row3">
                                     <td hidden>{{ $k }}</td>
+                                    
                                     {{ range $tkey, $tval := $v}}
                                     <td>{{ $tval }}</td>
                                     {{end}}

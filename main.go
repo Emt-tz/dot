@@ -47,9 +47,9 @@ func main() {
 	router.Use(CORSMiddleware())
 
 	router.LoadHTMLGlob("templates/*/*.html")
-	router.Static("/assets", "./assets")
+	router.Static("assets", "./assets")
 	router.NoRoute(func(c *gin.Context) {
-		c.HTML(404, "404.html",gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
+		c.HTML(404, "404.html", gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
 
 	initializeRoutes()
@@ -61,6 +61,9 @@ func main() {
 func render(c *gin.Context, data gin.H, templateName string) {
 	loggedInInterface, _ := c.Get("is_logged_in")
 	data["is_logged_in"] = loggedInInterface.(bool)
+	//check admin value 
+	isadmin, _ := c.Get("is_admin")
+	data["is_admin"] = isadmin.(bool)
 
 	switch c.Request.Header.Get("Accept") {
 	case "application/json":
