@@ -130,12 +130,6 @@ func initializeRoutes() {
 		//===============================desired program routes ======================//
 		//======================social innovator routes ==========//
 		//si program edit
-		userRoutes.GET("/si/profile-edit", ensureLoggedIn(), func(c *gin.Context) {
-			render(c, gin.H{
-				"title": "Socialent",
-				"Image": "../assets/img/anime3.png",
-			}, "table.html")
-		})
 		userRoutes.GET("/si", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Socialent",
@@ -145,15 +139,15 @@ func initializeRoutes() {
 		userRoutes.GET("/si/profile", ensureLoggedIn(), SocialInnovators_profile_handler_get) //progress get
 		userRoutes.GET("/si/beneficiaries", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title": "Gallery",
+				"title": "Social Innovators",
 				"Image": "../assets/img/anime3.png",
 			}, "si_beneficiaries.html")
 		})
-		userRoutes.GET("/si/gallery", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/si/survey", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title": "Gallery",
+				"title": "Survey",
 				"Image": "../assets/img/anime3.png",
-			}, "sigallery.html")
+			}, "si_survey.html")
 		})
 		//sipage user routes
 		userRoutes.GET("/si/user", ensureLoggedIn(), func(c *gin.Context) {
@@ -204,27 +198,27 @@ func initializeRoutes() {
 				"Image": "../assets/img/anime3.png",
 			}, "clpage.html")
 		})
-		userRoutes.GET("/digitalbusiness/gallery", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/digitalbusiness/leaders", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title": "Gallery",
+				"title": "Community Leaders",
 				"Image": "../assets/img/anime3.png",
-			}, "cl_gallery.html")
+			}, "cl_leaders.html")
 		})
-		userRoutes.GET("/digitalbusiness/profile", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/digitalbusiness/beneficiaries", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title": "Gallery",
+				"title": "Registration Form",
 				"Image": "../assets/img/anime3.png",
-			}, "cl_profile.html")
+			}, "cl_beneficiaries.html")
 		})
 		userRoutes.GET("/digitalbusiness/survey", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title": "Gallery",
+				"title": "Survey",
 				"Image": "../assets/img/anime3.png",
 			}, "cl_survey.html")
 		})
-		userRoutes.GET("/digitalbusiness/registration", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/digitalbusiness/register", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title": "Gallery",
+				"title": "Registration Form",
 				"Image": "../assets/img/anime3.png",
 			}, "cl_form.html")
 		})
@@ -276,11 +270,23 @@ func initializeRoutes() {
 				"Image": "../assets/img/anime3.png",
 			}, "djpage.html")
 		})
+		userRoutes.GET("/digitaljob/ambassador", ensureLoggedIn(), func(c *gin.Context) {
+			render(c, gin.H{
+				"title": "Digital Job",
+				"Image": "../assets/img/anime3.png",
+			}, "dj_ambassador_profile.html")
+		})
 		userRoutes.GET("/digitaljob/participants", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Digital Job",
 				"Image": "../assets/img/anime3.png",
 			}, "dj_participant.html")
+		})
+		userRoutes.GET("/digitaljob/register", ensureLoggedIn(), func(c *gin.Context) {
+			render(c, gin.H{
+				"title": "Digital Job",
+				"Image": "../assets/img/anime3.png",
+			}, "dj_register.html")
 		})
 		userRoutes.GET("/digitaljob/survey", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
@@ -288,12 +294,7 @@ func initializeRoutes() {
 				"Image": "../assets/img/anime3.png",
 			}, "dj_survey.html")
 		})
-		userRoutes.GET("/digitaljob/ambassador", ensureLoggedIn(), func(c *gin.Context) {
-			render(c, gin.H{
-				"title": "Digital Job",
-				"Image": "../assets/img/anime3.png",
-			}, "dj_ambassador_profile.html")
-		})
+		
 		//digitaljob user
 		userRoutes.GET("/digitaljob/user", ensureLoggedIn(), func(c *gin.Context) {
 			FirstName := ""
@@ -342,11 +343,11 @@ func initializeRoutes() {
 				"Image": "../assets/img/anime3.png",
 			}, "tydspage.html")
 		})
-		userRoutes.GET("/tyds/gallery", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/tyds/participants", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
-				"title": "TYDS",
+				"title": "Participants",
 				"Image": "../assets/img/anime3.png",
-			}, "tyds_gallery.html")
+			}, "tyds_participants.html")
 		})
 		userRoutes.GET("/tyds/survey", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
@@ -354,11 +355,17 @@ func initializeRoutes() {
 				"Image": "../assets/img/anime3.png",
 			}, "tyds_survey.html")
 		})
-		userRoutes.GET("/tyds/profile", ensureLoggedIn(), func(c *gin.Context) {
+		userRoutes.GET("/tyds/register", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "TYDS",
 				"Image": "../assets/img/anime3.png",
-			}, "tyds_bene_profile.html")
+			}, "tyds_registration.html")
+		})
+		userRoutes.GET("/tyds/tydsclub", ensureLoggedIn(), func(c *gin.Context) {
+			render(c, gin.H{
+				"title": "TYDS",
+				"Image": "../assets/img/anime3.png",
+			}, "tydspage.html")
 		})
 
 		//tyds user
