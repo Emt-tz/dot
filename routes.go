@@ -134,9 +134,11 @@ func initializeRoutes() {
 			render(c, gin.H{
 				"title": "Socialent",
 				"Image": "../assets/img/anime3.png",
+
 			}, "sipage.html")
 		})
-		userRoutes.GET("/si/profile", ensureLoggedIn(), SocialInnovators_profile_handler_get) //progress get
+		userRoutes.GET("/si/progresstrack", ensureLoggedIn(), SocialInnovators_progress_handler_get) //progress get
+		userRoutes.GET("/si/profile", ensureLoggedIn(),SocialInnovators_profile_handler)//profile get
 		userRoutes.GET("/si/beneficiaries", ensureLoggedIn(), func(c *gin.Context) {
 			render(c, gin.H{
 				"title": "Social Innovators",

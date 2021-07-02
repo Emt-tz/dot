@@ -12,35 +12,43 @@
               <thead class=" text-primary">
                 <tr>
                   <th>
-                    Name
+                    Unique Id
                   </th>
                   <th>
-                    Gender
+                    Full Name
                   </th>
                   <th>
-                    Age
+                    Program
                   </th>
                   <th>
                     Profile
                   </th>
+                  {{ if .is_admin}}
+                  <th>
+                    Progress Track
+                  </th>
+                  {{end}}
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
-                    Beneficiary 
+                  .id 
                   </td>
                   <td>
-                  Female
+                .Full_name
                   </td>
                   <td>
-                  21
+                  .program
                   </td>
-                  
                   <td>
-                    <a href="/si/profile?beneficiary=Beneficiary">Profile</a>
+                    <a href="/si/profile?Beneficiary=Beneficiary">Profile</a>
                   </td>
-                  
+                  {{ if .is_admin}}
+                  <td>
+                    <a href="/si/progresstrack?beneficiary=Beneficiary">Progress Track</a>
+                  </td>
+                  {{end}}
                   <!-- <td class="text-center">
                     $36,738
                   </td> -->

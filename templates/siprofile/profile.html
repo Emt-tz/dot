@@ -1,0 +1,117 @@
+{{ template "si_head.html" . }}
+<div class="content">
+  <div class="row">
+    <div class="col-12">
+      <!-- <div class="card card-chart">
+        <div class="card-header "> -->
+      <div class="row">
+        <div class="col-sm-12">
+
+          <!-- ======= About Section ======= -->
+          <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+              <div class="section-title">
+                <h2>Introduction</h2>
+                <p>{{ .data.details.other.paragraph}}</p>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4">
+                  <img src="../assets/img/profile-img6.jpg" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-8 pt-4 pt-lg-0 content">
+                  <h3>About
+                    <!--&amp;-->
+                  </h3>
+                  <!-- <p class="font-italic">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+              magna aliqua.
+            </p> -->
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <ul>
+                        <li><i class="icofont-rounded-right"></i> <strong>Social Innovation:</strong>
+                          {{.data.details.founder_details.full_name}}</li>
+                        <li><i class="icofont-rounded-right"></i> <strong>Website:</strong>
+                          {{.data.details.founder_details.website}}</li>
+                        <li><i class="icofont-rounded-right"></i> <strong>City:</strong>
+                          {{.data.details.founder_details.city}}</li>
+                        <!-- <li><i class="icofont-rounded-right"></i> <strong>City:</strong> Dar es salaam, Tanzania</li> -->
+                      </ul>
+                    </div>
+                    <div class="col-lg-6">
+                      <ul>
+                        <li><i class="icofont-rounded-right"></i> <strong>Phone:</strong>
+                          {{.data.details.founder_details.phone}}</li>
+                        <li><i class="icofont-rounded-right"></i> <strong>Email:</strong>
+                          {{.data.details.founder_details.email}}</li>
+                        <li><i class="icofont-rounded-right"></i> <strong>LinkedIn:</strong> Nangidare Lengai </li>
+                        <!-- <li><i class="icofont-rounded-right"></i> <strong>Twitter:</strong> </li> -->
+                      </ul>
+                    </div>
+                  </div>
+                  <h3>Vision
+                    <!--&amp;-->
+                  </h3>
+                  <p>
+                    {{.data.details.other.vision}}
+                  </p>
+                  <h3>Mission</h3>
+                  <p>
+                    {{.data.details.other.vision}}
+
+                  </p>
+                </div>
+              </div>
+              <br>
+              <h3>The Challenge being addressed
+                <!--&amp;-->
+              </h3>
+              <p>
+                {{.data.details.other.challenge}}
+              </p>
+              <br>
+              <h3>Who is the solution for? Describe your customer
+                <!--&amp;-->
+              </h3>
+              <p>
+                {{.data.details.other.solution}}
+              </p>
+              <br>
+              <h3>What support do you need to bring the innovation to life
+                <!--&amp;-->
+              </h3>
+              <p>{{.data.details.other.support}}
+              </p>
+
+            </div>
+            <div class="container">
+              <div class="section-title">
+                <h2>Skills</h2>
+              </div>
+              <div class="row">
+                {{ range $k, $v := .data.details.skills }}
+                <div class="col-lg-6">
+                  <span class="skill"><p>{{$k}} <i class="val">{{$v}}%</i></p></span>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{$v}}"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <br>
+                {{end}}
+              </div>
+            </div>
+
+          </section><!-- End About Section -->
+
+
+        </div>
+      </div>
+      <!-- </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+{{ template "si_footer.html" . }}

@@ -49,8 +49,8 @@ func performLogin(c *gin.Context) {
 		if email == "admin@dot.com" {
 			// If the username/password is valid set the token in a cookie
 			token := generateSessionToken()
-			c.SetCookie("token", token, 3600, "", "", false, true)
-			c.SetCookie("admin", token, 3600, "","", false, true )
+			c.SetCookie("token", token, 6000, "", "", false, true)
+			c.SetCookie("admin", token, 6000, "","", false, true )
 			c.Set("is_logged_in", true)
 			c.Set("is_admin", true)
 			// session.Save()
@@ -60,7 +60,7 @@ func performLogin(c *gin.Context) {
 			path := user_category_urls(category)
 			// If the username/password is valid set the token in a cookie
 			token := generateSessionToken()
-			c.SetCookie("token", token, 3600, "", "", false, true)
+			c.SetCookie("token", token, 6000, "", "", false, true)
 			c.Set("is_logged_in", true)
 			c.Set("is_admin", false)
 			// session.Save()
@@ -126,7 +126,7 @@ func register(c *gin.Context) {
 		if em != email {
 			if register_user == nil {
 				// token := generateSessionToken()
-				// c.SetCookie("token", token, 3600, "", "", true, false)
+				// c.SetCookie("token", token, 6000, "", "", true, false)
 
 				render(c, gin.H{
 					"ErrorTitle":   "Registration Successfully",
@@ -258,7 +258,7 @@ func SocialInnovators_progress_handler(c *gin.Context) {
 }
 
 //route is test
-func SocialInnovators_profile_handler_get(c *gin.Context) {
+func SocialInnovators_progress_handler_get(c *gin.Context) {
 	beneficiary := c.Query("beneficiary")
 	response,err := get_social_beneficiaries_progress(beneficiary)
 	if err == nil {
@@ -272,8 +272,18 @@ func SocialInnovators_profile_handler_get(c *gin.Context) {
 }
 
 func SocialInnovators_profile_handler(c *gin.Context) {
-	response := social_beneficiaries_profile()
-	c.JSON(http.StatusOK, gin.H{"response": response})
+	beneficiary := c.Query("beneficiary")
+	response,err := social_beneficiaries_profile(beneficiary)
+	if err == nil {
+		render(c, gin.H{
+			"title":"Profile",
+			"Image": "../assets/img/anime3.png",
+			"data": response,
+		}, "profile.html")
+	}else{
+		c.JSON(http.StatusOK, gin.H{"response": err.Error()})
+	}
+	// c.JSON(http.StatusOK, gin.H{"response": response})
 }
 
 //============================================== end social innovation handlers =====================================================

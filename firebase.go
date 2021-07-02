@@ -208,7 +208,7 @@ func delete_social_beneficiaries_progress(Beneficiary string, Table string) erro
 	}
 }
 
-func social_beneficiaries_profile() map[string]interface{} {
+func social_beneficiaries_profile(Beneficiary string) (map[string]interface{},error) {
 	ctx = context.Background()
 	//init firebase
 	opt := option.WithCredentialsFile("firebase.json")
@@ -222,14 +222,14 @@ func social_beneficiaries_profile() map[string]interface{} {
 	}
 	defer client.Close()
 
-	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection("Beneficiary")
+	iter := client.Collection("programs").Doc("SOCIAL-ENTREPRENEURSHIP").Collection(Beneficiary)
 
 	res, err := iter.Doc("Profile").Get(ctx)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return res.Data()
+	return res.Data(),nil
 
 }
 

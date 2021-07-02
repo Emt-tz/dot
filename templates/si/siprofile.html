@@ -1,167 +1,200 @@
 {{ template "si_head.html" . }}
 <div class="content">
     <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-header">
-                    <h4 class="card-title"> Progress Tracking</h4>
-                    {{ if .is_admin }}
-                    <input type="button"  class="add-row btn-sm btn-info btn" value="Add Row">
-                    
-                    {{ end }}
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table tablesorter " id="data_table">
-                            <thead class=" text-primary">
-                                <tr>
-                                    <th hidden>
-                                        id
-                                    </th>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <section id="faq2" class="faq2">
+                        <div class="container" data-aos="fade-up">
+                            <div class="section-title">
+                                <h2>Progress Tracking Tool</h2>
+                            </div>
+                            <div class="faq2-list">
+                                <ul>
+                                    <li data-aos="fade-up" data-aos-delay="100">
+                                        <a data-toggle="collapse" class="collapsed" href="#faq2-list-1">Overview<i
+                                                class="bx bx-chevron-down icon-show"></i><i
+                                                class="bx bx-chevron-up icon-close"></i></a>
+                                                <div id="faq2-list-1" class="collapse card" style="overflow-x:auto;" data-parent=".faq2-list">
+                                                    <div class="card-header">
+                                                        
+                                                        {{ if .is_admin }}
+                                                        <input type="button"  class="add-row btn-sm btn-info btn" value="Add Row">
+                                                        
+                                                        {{ end }}
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table tablesorter " id="data_table">
+                                                                <thead class=" text-primary">
+                                                                    <tr>
+                                                                        <th hidden>
+                                                                            id
+                                                                        </th>
+                                                                        
+                                                                        <th>Detail</th>
+                                                                        <th>Value</th>
+                                                                    </tr>
+                                                
+                                                                </thead>
+                                                                <tbody id="data_table_body">
+                                                                    {{range $k, $v := .bene.Table}}
+                                                                    <tr class="note-row">
+                                                                        <td hidden>{{ $k }}</td>
+                                                                        {{ range $tkey, $tval := $v}}
+                                                                        
+                                                                        <td>{{ $tkey }}</td>
+                                                                        <td>{{ $tval }}</td>
+                                                                        {{end}}
+                                                                    </tr>
+                                                                    {{end}}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </li>
+                                    <li data-aos="fade-up" data-aos-delay="200">
+                                        <a data-toggle="collapse" class="collapsed" href="#faq2-list-2">Virtual Training<i
+                                                class="bx bx-chevron-down icon-show"></i><i
+                                                class="bx bx-chevron-up icon-close"></i></a>
+                                                <div id="faq2-list-2" class="collapse card" style="overflow-x:auto;" data-parent=".faq2-list">
+                                                    <div class="card-header">
+                                                        {{ if .is_admin }}
+                                                        <input type="button"  class="add-row1 btn-sm btn-info btn" value="Add Row">
+                                                        {{ end }}
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table tablesorter " id="data_table1" style="overflow: hidden">
+                                                                <thead class=" text-primary">
+                                                                    <th hidden>Id</th>
+                                                                    
+                                                                    <th>Intervention</th>
+                                                                    <th>Lead</th>
+                                                                    <th>Date</th>
+                                                                    <th>Participation</th>
+                                                                    <th>Impact</th>
+                                                                    <th>Scoring</th>
+                                                                    <th>Outcome</th>
+                                                                    </tr>
                                     
-                                    <th>Detail</th>
-                                    <th>Value</th>
-                                </tr>
-
-                            </thead>
-                            <tbody id="data_table_body">
-                                {{range $k, $v := .bene.Table}}
-                                <tr class="note-row">
-                                    <td hidden>{{ $k }}</td>
-                                    {{ range $tkey, $tval := $v}}
+                                                                </thead>
+                                                                <tbody id="data_table_body1">
+                                                                    {{range $k, $v := .bene.Table2}}
+                                                                    <tr class="note-row1">
+                                                                        <td hidden>{{ $k }}</td>
+                                                                        
+                                                                        {{ range $tkey, $tval := $v}}
+                                                                        
+                                                                        <td>{{ $tval }}</td>
+                                                                        {{end}}
+                                                                    </tr>
+                                                                    {{end}}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </li>
+                                    <li data-aos="fade-up" data-aos-delay="300">
+                                        <a data-toggle="collapse" class="collapsed" href="#faq2-list-3">Bootcamp (Top 10)<i
+                                                class="bx bx-chevron-down icon-show"></i><i
+                                                class="bx bx-chevron-up icon-close"></i></a>
+                                                <div id="faq2-list-3" class="collapse card" style="overflow-x:auto;" data-parent=".faq2-list">
+                                                    <div class="card-header">
+                                                        
+                                                        {{ if .is_admin }}
+                                                        <input type="button"  class="add-row2 btn-sm btn-info btn" value="Add Row">
+                                                        
+                                                        {{ end }}
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table tablesorter " id="data_table2">
+                                                                <thead class=" text-primary">
+                                                                    <th hidden>Id</th>
+                                                                    
+                                                                    <th>Intervention</th>
+                                                                    <th>Lead</th>
+                                                                    <th>Date</th>
+                                                                    <th>Participation</th>
+                                                                    <th>Impact</th>
+                                                                    <th>Scoring</th>
+                                                                    <th>Outcome</th>
+                                                                    </tr>
                                     
-                                    <td>{{ $tkey }}</td>
-                                    <td>{{ $tval }}</td>
-                                    {{end}}
-                                </tr>
-                                {{end}}
-                            </tbody>
-                        </table>
-                    </div>
+                                                                </thead>
+                                                                <tbody id="data_table_body2">
+                                                                    {{range $k, $v := .bene.Table3}}
+                                                                    <tr class="note-row2">
+                                                                        <td hidden>{{ $k }}</td>
+                                                                        
+                                                                        {{ range $tkey, $tval := $v}}
+                                                                        <td>{{ $tval }}</td>
+                                                                        {{end}}
+                                                                    </tr>
+                                                                    {{end}}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </li>
+                                    <li data-aos="fade-up" data-aos-delay="400">
+                                        <a data-toggle="collapse" class="collapsed" href="#faq2-list-4">Virtual Training (All)<i
+                                                class="bx bx-chevron-down icon-show"></i><i
+                                                class="bx bx-chevron-up icon-close"></i></a>
+                                                <div id="faq2-list-4" class="collapse card" style="overflow-x:auto;" data-parent=".faq2-list">
+                                                    <div class="card-header">
+                                                        {{ if .is_admin }}
+                                                        <input type="button"  class="add-row3 btn-sm btn-info btn" value="Add Row">
+                                                        
+                                                        {{ end }}
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table tablesorter " id="data_table3" style="overflow: hidden">
+                                                                <thead class=" text-primary">
+                                                                    <th hidden>Id</th>
+                                                                    
+                                                                    <th>Intervention</th>
+                                                                    <th>Lead</th>
+                                                                    <th>Date</th>
+                                                                    <th>Participation</th>
+                                                                    <th>Impact</th>
+                                                                    <th>Scoring</th>
+                                                                    <th>Outcome</th>
+                                                                    </tr>
+                                    
+                                                                </thead>
+                                                                <tbody id="data_table_body3">
+                                                                    {{range $k, $v := .bene.Table4}}
+                                                                    <tr class="note-row3">
+                                                                        <td hidden>{{ $k }}</td>
+                                                                        
+                                                                        {{ range $tkey, $tval := $v}}
+                                                                        <td>{{ $tval }}</td>
+                                                                        {{end}}
+                                                                    </tr>
+                                                                    {{end}}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+    
+                    </section>
                 </div>
             </div>
-            <div class="card ">
-                <div class="card-header">
-                    <h4 class="card-title">Virtual Training (All)</h4>
-                    {{ if .is_admin }}
-                    <input type="button"  class="add-row1 btn-info btn" value="Add Row">
-                    
-                    {{ end }}
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table tablesorter " id="data_table1" style="overflow: hidden">
-                            <thead class=" text-primary">
-                                <th hidden>Id</th>
-                                
-                                <th>Intervention</th>
-                                <th>Lead</th>
-                                <th>Date</th>
-                                <th>Participation</th>
-                                <th>Impact</th>
-                                <th>Scoring</th>
-                                <th>Outcome</th>
-                                </tr>
 
-                            </thead>
-                            <tbody id="data_table_body1">
-                                {{range $k, $v := .bene.Table2}}
-                                <tr class="note-row1">
-                                    <td hidden>{{ $k }}</td>
-                                    
-                                    {{ range $tkey, $tval := $v}}
-                                    
-                                    <td>{{ $tval }}</td>
-                                    {{end}}
-                                </tr>
-                                {{end}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="card ">
-                <div class="card-header">
-                    <h4 class="card-title">Bootcamp (Top 10)</h4>
-                    {{ if .is_admin }}
-                    <input type="button"  class="add-row2 btn-info btn" value="Add Row">
-                    
-                    {{ end }}
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table tablesorter " id="data_table2">
-                            <thead class=" text-primary">
-                                <th hidden>Id</th>
-                                
-                                <th>Intervention</th>
-                                <th>Lead</th>
-                                <th>Date</th>
-                                <th>Participation</th>
-                                <th>Impact</th>
-                                <th>Scoring</th>
-                                <th>Outcome</th>
-                                </tr>
-
-                            </thead>
-                            <tbody id="data_table_body2">
-                                {{range $k, $v := .bene.Table3}}
-                                <tr class="note-row2">
-                                    <td hidden>{{ $k }}</td>
-                                    
-                                    {{ range $tkey, $tval := $v}}
-                                    <td>{{ $tval }}</td>
-                                    {{end}}
-                                </tr>
-                                {{end}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card ">
-                <div class="card-header">
-                    <h4 class="card-title">Virtual Training (All)</h4>
-                    {{ if .is_admin }}
-                    <input type="button"  class="add-row3 btn-info btn" value="Add Row">
-                    
-                    {{ end }}
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table tablesorter " id="data_table3" style="overflow: hidden">
-                            <thead class=" text-primary">
-                                <th hidden>Id</th>
-                                
-                                <th>Intervention</th>
-                                <th>Lead</th>
-                                <th>Date</th>
-                                <th>Participation</th>
-                                <th>Impact</th>
-                                <th>Scoring</th>
-                                <th>Outcome</th>
-                                </tr>
-
-                            </thead>
-                            <tbody id="data_table_body3">
-                                {{range $k, $v := .bene.Table4}}
-                                <tr class="note-row3">
-                                    <td hidden>{{ $k }}</td>
-                                    
-                                    {{ range $tkey, $tval := $v}}
-                                    <td>{{ $tval }}</td>
-                                    {{end}}
-                                </tr>
-                                {{end}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
 </div>
 <div>
-{{ template "si_footer.html" . }}
+    {{ template "si_footer.html" . }}
